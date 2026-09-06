@@ -93,14 +93,17 @@ header.top{
    longer depends on tagline length. */
 .brand{ display:flex; align-items:center; gap:12px; text-decoration:none; color:var(--ink); flex:1 1 0%; min-width:0; }
 .brand img{ width:42px; height:42px; border-radius:50%; flex-shrink:0; }
-/* Logo-only header on phones: the full name + tagline is what forces
-   the wrapping/crowding against the language dropdown on narrow
-   screens, and the hero section right below already shows the full
-   name prominently, so nothing is lost by dropping it here. Desktop
-   and tablet keep the full branded header since there's plenty of
-   room there. The name stays available to screen readers via the
-   link's aria-label. */
-@media (max-width: 480px){ .brand .name{ display:none; } }
+/* Slim, language-only header on phones: the hero right below already
+   shows the logo (bigger) and full name, so repeating a small logo up
+   here just to sit next to the language pill added height without
+   adding information — it read as empty space. Dropping the whole
+   brand block and tightening the bar's padding keeps the language
+   switcher reachable while scrolling, without the wasted-looking bar.
+   Desktop/tablet keep the full branded header since there's room. */
+@media (max-width: 480px){
+  .brand{ display:none; }
+  .topbar{ justify-content:center; padding:8px 24px; }
+}
 /* No white-space:nowrap here on purpose: this site's name ("The Flying
    Dragon Asian Kitchen") is long enough that forcing it onto one line
    caused it to overflow its box and visually overlap the language
