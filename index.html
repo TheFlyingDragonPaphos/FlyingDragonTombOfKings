@@ -151,7 +151,8 @@ nav.links a:hover{ opacity:1; color:var(--red); }
 }
 .hero .stars{ font-size:0.95rem; color:var(--muted); margin-bottom: 28px; }
 .hero .stars b{ color: var(--ink); }
-.cta-row{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.cta-row{ display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap; }
+.nowrap{ white-space:nowrap; }
 .btn{
   display:inline-flex; align-items:center; gap:8px;
   padding: 13px 22px; border-radius: 999px;
@@ -307,7 +308,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <p class="tag" data-i18n="hero.tag">Dine-in Asian restaurant in Kato Paphos serving Thai, Chinese and sushi. Also available for takeaway and delivery.</p>
     <p class="stars">⭐ <b>4.7</b> <span data-i18n="hero.starsSuffix">out of 5 (370 reviews) on TripAdvisor</span></p>
     <div class="cta-row">
-      <a class="btn primary" href="tel:+35796000306"><span data-i18n="hero.callBtn">Call to book</span> · 96 000306</a>
+      <a class="btn primary" href="tel:+35796000306"><span data-i18n="hero.callBtn">Call to book</span> <span class="nowrap">· 96 000306</span></a>
       <a class="btn ghost" href="#order" data-i18n="hero.orderBtn">Order online</a>
     </div>
   </div>
