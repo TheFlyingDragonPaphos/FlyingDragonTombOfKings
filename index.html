@@ -6,6 +6,9 @@
 <title>The Flying Dragon Asian Kitchen | Kato Paphos</title>
 <meta name="description" content="The Flying Dragon Asian Kitchen in Kato Paphos, Cyprus — Thai, Chinese and sushi. Dine-in, takeaway and delivery.">
 <link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shojumaru&display=swap">
 <style>
 
 /* ============================================================
@@ -135,40 +138,41 @@ nav.links a:hover{ opacity:1; color:var(--red); }
 .lang-select:hover{ border-color: var(--red); }
 
 /* ---------- hero ---------- */
-/* No restaurant photo yet — using the same warm gradient look the
-   Emba site started with. Once a photo is available, swap this for
-   a background-image the same way Emba's hero was upgraded (see
-   that project's index.html for the exact before/after pattern:
-   dark overlay + text-shadow on h1/p.tag/.stars for legibility). */
+/* No restaurant photo yet (coming later) — red gradient wash for now,
+   same treatment Emba's hero uses under its photo. When a photo is
+   ready, add "url('assets/hero.jpg') center 30% / cover no-repeat,"
+   right before the var(--cream) fallback below and it'll show through
+   the same wash automatically — no other changes needed. */
 .hero{
-  background:
-    radial-gradient(circle at 15% 20%, rgba(200,16,46,0.10), transparent 45%),
-    radial-gradient(circle at 85% 0%, rgba(217,164,65,0.18), transparent 40%),
-    var(--cream);
+  background: linear-gradient(155deg, var(--red) 0%, var(--red-dark) 100%);
   padding: 64px 24px 56px;
   text-align:center;
 }
 .hero img.logo{
-  width: 120px; height:120px; margin: 0 auto 18px;
+  width: 230px; height:230px; margin: 0 auto 20px;
   border-radius: 50%;
   box-shadow: var(--shadow);
-  border: 4px solid var(--paper);
-  /* logo.png has a transparent (not white) background — this matters
-     the moment a photo background is added here later, same as Emba. */
+  border: 6px solid var(--paper);
+  /* logo.png has a transparent (not white) background, so without this
+     the red hero background shows through the transparent parts, making
+     the dragon's dark linework blend in instead of sitting on white */
   background: var(--paper);
 }
 .hero h1{
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-family: 'Shojumaru', cursive;
+  font-size: clamp(2.1rem, 6.5vw, 3.4rem);
+  font-weight: 400;
   margin: 0 0 10px;
-  letter-spacing: -0.5px;
+  letter-spacing: 0.5px;
+  color:#fff; text-shadow: 0 2px 14px rgba(0,0,0,0.6);
 }
-.hero h1 span{ color: var(--red); }
+.hero h1 span{ color:#fff; }
 .hero p.tag{
   max-width: 560px; margin: 0 auto 28px;
-  color: var(--muted); font-size: 1.08rem;
+  color:#f7f0e8; font-size: 1.08rem; text-shadow: 0 1px 10px rgba(0,0,0,0.85);
 }
-.hero .stars{ font-size:0.95rem; color:var(--muted); margin-bottom: 28px; }
-.hero .stars b{ color: var(--ink); }
+.hero .stars{ font-size:0.95rem; color:#f7f0e8; margin-bottom: 28px; text-shadow: 0 1px 10px rgba(0,0,0,0.85); }
+.hero .stars b{ color:#fff; }
 .cta-row{ display:flex; gap:14px; justify-content:center; align-items:center; flex-wrap:wrap; }
 .nowrap{ white-space:nowrap; }
 .btn{
@@ -179,7 +183,14 @@ nav.links a:hover{ opacity:1; color:var(--red); }
 }
 .btn.primary{ background: var(--red); color:#fff; }
 .btn.primary:hover{ background: var(--red-dark); }
+/* The hero background is solid red (see .hero above), so the default
+   red .btn.primary would nearly disappear against it — swap to a paper
+   button here so the "Call to book" CTA still stands out. */
+.hero .btn.primary{ background: var(--paper); color: var(--red-dark); }
+.hero .btn.primary:hover{ background: var(--cream); }
 .btn.ghost{ background: transparent; border-color: var(--ink); color: var(--ink); }
+.hero .btn.ghost{ border-color:#fff; color:#fff; }
+.hero .btn.ghost:hover{ background:#fff; color: var(--ink); }
 .btn.ghost:hover{ background: var(--ink); color:#fff; }
 .btn.gold{ background: var(--gold); color: var(--ink); }
 .btn.gold:hover{ filter: brightness(0.95); }
@@ -197,10 +208,14 @@ p.section-sub{
 }
 
 /* ---------- location card ---------- */
+/* Wider than the sitewide 900px .wrap on purpose: a two-column layout
+   (contact info + hours beside the map) needs more room, or it reads as
+   cramped and mostly-empty on a real desktop screen. */
+#location .wrap{ max-width: 1040px; }
 .loc-card{
   background: var(--paper); border-radius: var(--radius);
   box-shadow: var(--shadow); overflow:hidden;
-  max-width: 620px; margin: 0 auto;
+  max-width: 1040px; margin: 0 auto;
 }
 .loc-card .band{
   background: linear-gradient(120deg, var(--red), var(--red-dark));
@@ -211,10 +226,19 @@ p.section-sub{
   opacity:0.85; font-weight:700;
 }
 .loc-card .band h3{ margin: 4px 0 0; font-size:1.35rem; }
-.loc-body{ padding: 26px 28px 30px; display:flex; flex-direction:column; gap:18px; }
+/* Two columns on wide screens: contact details + hours on the left, map
+   on the right — grouped this way so related things sit together:
+   address/phone/call button as one "reach us" block, status/hours as
+   one "when" block. */
+.loc-body{
+  padding: 28px 30px 32px;
+  display:grid; grid-template-columns: 1fr 1fr; gap: 36px;
+}
+.loc-info{ display:flex; flex-direction:column; gap:18px; }
 .loc-row{ display:flex; gap:12px; align-items:flex-start; font-size:0.97rem; }
 .loc-row .ico{ font-size:1.2rem; line-height:1.4; }
 .loc-row a{ text-decoration:none; color: var(--red-dark); font-weight:600; }
+.loc-divider{ border:none; border-top:1px solid rgba(32,21,18,0.1); margin:2px 0; }
 .status{
   display:inline-flex; align-items:center; gap:8px;
   font-weight:700; font-size:0.85rem; padding: 6px 12px;
@@ -227,9 +251,39 @@ p.section-sub{
 .hours-table td{ padding: 4px 0; color: var(--muted); }
 .hours-table td.day{ font-weight:600; color: var(--ink); width:40%; }
 .hours-table tr.today td{ color: var(--ink); font-weight:700; }
-.loc-actions{ display:flex; gap:10px; flex-wrap:wrap; padding-top:4px; }
-.map-embed{ border-radius: 12px; overflow:hidden; box-shadow: 0 4px 14px rgba(32,21,18,0.08); }
-.map-embed iframe{ display:block; }
+.loc-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+.loc-map-col{ display:flex; }
+.map-embed{
+  border-radius: 12px; overflow:hidden; box-shadow: 0 4px 14px rgba(32,21,18,0.08);
+  width:100%; min-height: 360px;
+}
+.map-embed iframe{ display:block; width:100%; height:100%; min-height:360px; }
+@media (max-width: 760px){
+  .loc-body{ grid-template-columns: 1fr; gap:22px; }
+  .map-embed, .map-embed iframe{ min-height: 260px; }
+}
+
+/* ---------- gallery ---------- */
+#gallery{ background: var(--paper); }
+/* No section-sub under this heading, so the title needs its own bottom
+   margin to keep the same breathing room every other section gets
+   from its subtitle. */
+#gallery .section-title{ margin-bottom: 32px; }
+.gallery-grid{
+  display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;
+}
+.gallery-grid .gallery-tile{
+  width:100%; height:200px; border-radius: var(--radius); box-shadow: var(--shadow);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  background: linear-gradient(155deg, var(--red) 0%, var(--red-dark) 100%);
+  color:#f7e9dd; font-size:0.85rem; padding:16px;
+}
+.gallery-grid img{
+  width:100%; height:200px; object-fit:cover;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+@media (max-width: 720px){ .gallery-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 420px){ .gallery-grid{ grid-template-columns: 1fr; } .gallery-grid img, .gallery-grid .gallery-tile{ height:220px; } }
 
 /* ---------- dishes ---------- */
 /* Fixed 2 columns so 4 dish cards form an even 2x2 grid instead of
@@ -246,6 +300,7 @@ p.section-sub{
 .dish .dish-icon img{ width:100%; height:120px; object-fit:cover; border-radius:10px; }
 .dish h4{ margin:0 0 6px; font-size:1.05rem; }
 .dish p{ margin:0; color:var(--muted); font-size:0.9rem; }
+.menu-pdf-cta{ text-align:center; margin-top:28px; }
 .allergen-note{
   text-align:center; color: var(--muted); font-size:0.85rem;
   max-width: 560px; margin: 28px auto 0; padding-top: 20px;
@@ -259,7 +314,29 @@ p.section-sub{
 }
 .menu-cta h2{ color:#fff; }
 .menu-cta p.section-sub{ color:#cfc2ba; }
-.order-row{ display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top: 24px; }
+.order-row{ display:flex; gap:16px; justify-content:center; align-items:center; flex-wrap:wrap; margin-top: 24px; }
+/* Official delivery-partner logos on identically-sized white pills, so
+   each shows in its own real brand colour rather than forced into the
+   site's red/gold palette. Each logo file's visible glyph sits at a
+   different height within its own image, so the img height is tuned
+   per brand (not a single shared value) to make the two look like a
+   matched set rather than technically-equal-but-visually-mismatched. */
+.order-logo-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width: 128px; height: 52px;
+  background: var(--paper);
+  border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.28);
+  transition: transform 0.15s ease;
+}
+.order-logo-btn:hover{ transform: translateY(-2px); }
+.order-logo-btn img{ width:auto; display:block; }
+.order-logo-btn.wolt img{ height: 24px; }
+.order-logo-btn.foody img{ height: 42px; }
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
 
 /* ---------- reviews ---------- */
 .review-card{
@@ -300,7 +377,9 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <div class="top-right">
       <nav class="links">
         <a href="#location" data-i18n="nav.location">Location &amp; hours</a>
+        <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
         <a href="#dishes" data-i18n="nav.dishes">Menu highlights</a>
+        <a href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
         <a href="#order" data-i18n="nav.order">Order online</a>
       </nav>
       <!-- Language switcher: EN is default, others are AI-translated -->
@@ -343,40 +422,72 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
         <h3>The Flying Dragon Asian Kitchen</h3>
       </div>
       <div class="loc-body">
-        <div class="loc-row"><span class="ico">📍</span><span>Tombs of the Kings Ave 28, Paphos 8046, Kato Paphos<br>
-          <a href="https://www.google.com/maps/search/?api=1&query=The+Flying+Dragon+Asian+Kitchen+Restaurant+Tombs+of+the+Kings+Ave+28+Paphos" target="_blank" rel="noopener" data-i18n="loc.directions">Get directions →</a></span></div>
-        <div class="loc-row"><span class="ico">📞</span><a href="tel:+35796000306">+357 96 000306</a></div>
+        <!-- Left: how to reach us (address, phone, call button), then when
+             we're open (status + hours). Right: the map, as its own column
+             instead of buried between the hours table and the call button. -->
+        <div class="loc-info">
+          <div class="loc-row"><span class="ico">📍</span><span>Tombs of the Kings Ave 28, Paphos 8046, Kato Paphos<br>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=34.7679249,32.4106917" target="_blank" rel="noopener" data-i18n="loc.directions">Get directions →</a></span></div>
+          <div class="loc-row"><span class="ico">📞</span><a href="tel:+35796000306">+357 96 000306</a></div>
 
-        <div class="status" id="status-restaurant">
-          <span class="dot"></span><span class="status-text" data-i18n="status.checking">Checking hours…</span>
+          <div class="loc-actions">
+            <a class="btn primary" href="tel:+35796000306" data-i18n="loc.callBtn">Call to book</a>
+          </div>
+
+          <hr class="loc-divider">
+
+          <div class="status" id="status-restaurant">
+            <span class="dot"></span><span class="status-text" data-i18n="status.checking">Checking hours…</span>
+          </div>
+
+          <!-- EDIT HOURS HERE. data-closed="true" marks a day as fully closed
+               (its time cell is just a translated "Closed" label, not a real
+               time range) — the open/closed script relies on this attribute,
+               not on the text, so it keeps working in every language. -->
+          <table class="hours-table" data-hours-table="restaurant">
+            <tr data-day="0"><td class="day" data-i18n="days.sun">Sunday</td><td>1:00pm – 11:00pm</td></tr>
+            <tr data-day="1"><td class="day" data-i18n="days.mon">Monday</td><td>1:00pm – 11:00pm</td></tr>
+            <tr data-day="2" data-closed="true"><td class="day" data-i18n="days.tue">Tuesday</td><td data-i18n="hours.closed">Closed</td></tr>
+            <tr data-day="3"><td class="day" data-i18n="days.wed">Wednesday</td><td>1:00pm – 11:00pm</td></tr>
+            <tr data-day="4"><td class="day" data-i18n="days.thu">Thursday</td><td>1:00pm – 11:00pm</td></tr>
+            <tr data-day="5"><td class="day" data-i18n="days.fri">Friday</td><td>1:00pm – 11:00pm</td></tr>
+            <tr data-day="6"><td class="day" data-i18n="days.sat">Saturday</td><td>1:00pm – 11:00pm</td></tr>
+          </table>
         </div>
 
-        <!-- EDIT HOURS HERE. data-closed="true" marks a day as fully closed
-             (its time cell is just a translated "Closed" label, not a real
-             time range) — the open/closed script relies on this attribute,
-             not on the text, so it keeps working in every language. -->
-        <table class="hours-table" data-hours-table="restaurant">
-          <tr data-day="0"><td class="day" data-i18n="days.sun">Sunday</td><td>1:00pm – 11:00pm</td></tr>
-          <tr data-day="1"><td class="day" data-i18n="days.mon">Monday</td><td>1:00pm – 11:00pm</td></tr>
-          <tr data-day="2" data-closed="true"><td class="day" data-i18n="days.tue">Tuesday</td><td data-i18n="hours.closed">Closed</td></tr>
-          <tr data-day="3"><td class="day" data-i18n="days.wed">Wednesday</td><td>1:00pm – 11:00pm</td></tr>
-          <tr data-day="4"><td class="day" data-i18n="days.thu">Thursday</td><td>1:00pm – 11:00pm</td></tr>
-          <tr data-day="5"><td class="day" data-i18n="days.fri">Friday</td><td>1:00pm – 11:00pm</td></tr>
-          <tr data-day="6"><td class="day" data-i18n="days.sat">Saturday</td><td>1:00pm – 11:00pm</td></tr>
-        </table>
-
-        <div class="map-embed">
-          <iframe
-            src="https://www.google.com/maps?q=The+Flying+Dragon+Asian+Kitchen+Restaurant+Tombs+of+the+Kings+Ave+28+Paphos&output=embed"
-            width="100%" height="260" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            title="Map to The Flying Dragon Asian Kitchen, Kato Paphos">
-          </iframe>
-        </div>
-
-        <div class="loc-actions">
-          <a class="btn primary small" href="tel:+35796000306" data-i18n="loc.callBtn">Call to book</a>
+        <div class="loc-map-col">
+          <!-- Pinned by exact coordinates, not a name/address search: a
+               text search for "The Flying Dragon..." risks also matching
+               the other, fully separate Flying Dragon restaurant (Emba),
+               which could send a customer to the wrong location. -->
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=34.7679249,32.4106917&z=17&output=embed"
+              width="100%" height="100%" style="border:0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Map to The Flying Dragon Asian Kitchen, Kato Paphos">
+            </iframe>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <!-- Reusing the nav.gallery translation key keeps this heading and
+         the nav link in sync without a separate set of translations. -->
+    <h2 class="section-title" data-i18n="nav.gallery">Gallery</h2>
+
+    <!-- EDIT GALLERY PHOTOS HERE: replace each .gallery-tile div below
+         with an <img src="assets/your-photo.jpg" alt="..."> once real
+         photos are available (outside, dining room, dishes), matching
+         the pattern used on the Emba site's gallery section. -->
+    <div class="gallery-grid">
+      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
+      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
+      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
+      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
     </div>
   </div>
 </section>
@@ -414,6 +525,10 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
       </div>
     </div>
 
+    <div class="menu-pdf-cta">
+      <a class="btn primary" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="dishes.viewMenuBtn">📋 View full menu (PDF)</a>
+    </div>
+
     <p class="allergen-note" data-i18n="allergen.note">Please let our staff know of any allergies before ordering — full ingredient information is available on request.</p>
   </div>
 </section>
@@ -421,10 +536,15 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
 <section id="order">
   <div class="wrap menu-cta">
     <h2 class="section-title" data-i18n="order.title">Order online</h2>
-    <p class="section-sub" data-i18n="order.sub">Full menu with current prices is on our delivery partners — or just call us directly.</p>
     <div class="order-row">
-      <a class="btn gold" href="https://wolt.com/en/cyp/paphos/restaurant/the-flying-dragon-kato-paphos" target="_blank" rel="noopener" data-i18n="order.wolt">Order on Wolt</a>
-      <a class="btn ghost" style="border-color:#fff;color:#fff" href="https://www.foody.com.cy/delivery/pafos/the-flying-dragon-asian-kitchen-kato-paphos" target="_blank" rel="noopener" data-i18n="order.foody">Order on Foody</a>
+      <a class="order-logo-btn wolt" href="https://wolt.com/en/cyp/paphos/restaurant/the-flying-dragon-kato-paphos" target="_blank" rel="noopener">
+        <img src="assets/delivery/wolt.svg" alt="" loading="lazy">
+        <span class="sr-only" data-i18n="order.wolt">Order on Wolt</span>
+      </a>
+      <a class="order-logo-btn foody" href="https://www.foody.com.cy/delivery/pafos/the-flying-dragon-asian-kitchen-kato-paphos" target="_blank" rel="noopener">
+        <img src="assets/delivery/foody.svg" alt="" loading="lazy">
+        <span class="sr-only" data-i18n="order.foody">Order on Foody</span>
+      </a>
     </div>
   </div>
 </section>
@@ -463,7 +583,9 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
 // ============================================================
 var translations = {
   en: {
-    'nav.location': 'Location & hours', 'nav.dishes': 'Menu highlights', 'nav.order': 'Order online',
+    'nav.gallery': 'Gallery', 'nav.location': 'Location & hours', 'nav.dishes': 'Menu highlights', 'nav.menu': 'Full menu', 'nav.order': 'Order online',
+    'dishes.viewMenuBtn': '📋 View full menu (PDF)',
+    'gallery.comingSoon': 'Photos coming soon',
     'brand.tagline': 'Thai, Chinese & Sushi Restaurant, Kato Paphos',
     'hero.tag': 'Dine-in Asian restaurant in Kato Paphos serving Thai, Chinese and sushi. Also available for takeaway and delivery.',
     'hero.starsSuffix': 'out of 5 (24 reviews) on TripAdvisor',
@@ -482,14 +604,16 @@ var translations = {
     'dish3.desc': 'Classic Thai hot and sour, and creamy coconut soup, made fresh to order.',
     'dish4.desc': 'A guest favourite starter — crispy cauliflower in a sweet, spicy glaze.',
     'allergen.note': 'Please let our staff know of any allergies before ordering — full ingredient information is available on request.',
-    'order.title': 'Order online', 'order.sub': 'Full menu with current prices is on our delivery partners — or just call us directly.',
+    'order.title': 'Order online',
     'order.wolt': 'Order on Wolt', 'order.foody': 'Order on Foody',
     'reviews.title': 'What people say', 'reviews.sub': 'Our review score on TripAdvisor.', 'reviews.readBtn': 'Read reviews', 'reviews.count': '/ 5 · 24 reviews',
     'footer.tagline': 'Thai, Chinese & Sushi Restaurant',
     'footer.fine': 'Hours shown are subject to change around public holidays — call ahead to confirm.'
   },
   el: {
-    'nav.location': 'Ώρες & Τοποθεσία', 'nav.dishes': 'Προτεινόμενα πιάτα', 'nav.order': 'Παραγγελία online',
+    'nav.gallery': 'Φωτογραφίες', 'nav.location': 'Ώρες & Τοποθεσία', 'nav.dishes': 'Προτεινόμενα πιάτα', 'nav.menu': 'Πλήρες μενού', 'nav.order': 'Παραγγελία online',
+    'dishes.viewMenuBtn': '📋 Δείτε το πλήρες μενού (PDF)',
+    'gallery.comingSoon': 'Φωτογραφίες σύντομα',
     'brand.tagline': 'Ταϊλανδέζικο, Κινέζικο & Sushi Εστιατόριο, Κάτω Πάφος',
     'hero.tag': 'Εστιατόριο ασιατικής κουζίνας στην Κάτω Πάφο με ταϊλανδέζικα, κινέζικα πιάτα και sushi. Διαθέσιμο επίσης για take away και delivery.',
     'hero.starsSuffix': 'στα 5 (24 κριτικές) στο TripAdvisor',
@@ -508,14 +632,16 @@ var translations = {
     'dish3.desc': 'Κλασική ταϊλανδέζικη πικάντικη-ξινή σούπα, και κρεμώδης σούπα καρύδας, φτιαγμένες φρέσκες κατά παραγγελία.',
     'dish4.desc': 'Αγαπημένο ορεκτικό των πελατών μας — τραγανό κουνουπίδι σε γλυκόπικάντικη γλάζα.',
     'allergen.note': 'Παρακαλούμε ενημερώστε το προσωπικό μας για τυχόν αλλεργίες πριν παραγγείλετε — πλήρεις πληροφορίες συστατικών διαθέσιμες κατόπιν αιτήματος.',
-    'order.title': 'Παραγγελία online', 'order.sub': 'Το πλήρες μενού με τις τρέχουσες τιμές θα το βρείτε στους συνεργάτες delivery — ή απλά καλέστε μας απευθείας.',
+    'order.title': 'Παραγγελία online',
     'order.wolt': 'Παραγγελία στο Wolt', 'order.foody': 'Παραγγελία στο Foody',
     'reviews.title': 'Τι λένε οι πελάτες μας', 'reviews.sub': 'Η βαθμολογία μας στο TripAdvisor.', 'reviews.readBtn': 'Δείτε τις κριτικές', 'reviews.count': '/ 5 · 24 κριτικές',
     'footer.tagline': 'Ταϊλανδέζικο, Κινέζικο & Sushi Εστιατόριο',
     'footer.fine': 'Το ωράριο ενδέχεται να αλλάξει τις αργίες — καλέστε μας για επιβεβαίωση.'
   },
   ru: {
-    'nav.location': 'Адрес и часы работы', 'nav.dishes': 'Популярные блюда', 'nav.order': 'Заказать онлайн',
+    'nav.gallery': 'Фотогалерея', 'nav.location': 'Адрес и часы работы', 'nav.dishes': 'Популярные блюда', 'nav.menu': 'Полное меню', 'nav.order': 'Заказать онлайн',
+    'dishes.viewMenuBtn': '📋 Посмотреть полное меню (PDF)',
+    'gallery.comingSoon': 'Фото скоро появятся',
     'brand.tagline': 'Тайский, китайский ресторан и суши, Като Пафос',
     'hero.tag': 'Азиатский ресторан в Като Пафосе с тайской, китайской кухней и суши. Также доступны навынос и доставка.',
     'hero.starsSuffix': 'из 5 (24 отзывов) на TripAdvisor',
@@ -534,14 +660,16 @@ var translations = {
     'dish3.desc': 'Классический тайский острый и кислый суп, а также сливочный суп на кокосовом молоке, готовятся свежими на заказ.',
     'dish4.desc': 'Любимая закуска наших гостей — хрустящая цветная капуста в сладко-острой глазури.',
     'allergen.note': 'Пожалуйста, сообщите нашему персоналу о любых аллергиях перед заказом — полная информация о составе доступна по запросу.',
-    'order.title': 'Заказать онлайн', 'order.sub': 'Полное меню с актуальными ценами доступно у наших партнёров по доставке — или просто позвоните нам напрямую.',
+    'order.title': 'Заказать онлайн',
     'order.wolt': 'Заказать через Wolt', 'order.foody': 'Заказать через Foody',
     'reviews.title': 'Отзывы наших гостей', 'reviews.sub': 'Наш рейтинг на TripAdvisor.', 'reviews.readBtn': 'Читать отзывы', 'reviews.count': '/ 5 · 24 отзывов',
     'footer.tagline': 'Тайский, китайский ресторан и суши',
     'footer.fine': 'Часы работы могут меняться в праздничные дни — пожалуйста, звоните заранее для уточнения.'
   },
   de: {
-    'nav.location': 'Standort & Öffnungszeiten', 'nav.dishes': 'Beliebte Gerichte', 'nav.order': 'Online bestellen',
+    'nav.gallery': 'Galerie', 'nav.location': 'Standort & Öffnungszeiten', 'nav.dishes': 'Beliebte Gerichte', 'nav.menu': 'Vollständige Speisekarte', 'nav.order': 'Online bestellen',
+    'dishes.viewMenuBtn': '📋 Vollständige Speisekarte ansehen (PDF)',
+    'gallery.comingSoon': 'Fotos folgen in Kürze',
     'brand.tagline': 'Thailändisches, Chinesisches & Sushi-Restaurant, Kato Paphos',
     'hero.tag': 'Asiatisches Restaurant in Kato Paphos mit thailändischer, chinesischer Küche und Sushi. Auch zum Mitnehmen und liefern lassen erhältlich.',
     'hero.starsSuffix': 'von 5 (24 Bewertungen) auf TripAdvisor',
@@ -560,14 +688,16 @@ var translations = {
     'dish3.desc': 'Klassische thailändische scharf-saure Suppe sowie eine cremige Kokossuppe, jeweils frisch zubereitet.',
     'dish4.desc': 'Ein Favorit unserer Gäste — knuspriger Blumenkohl in einer süß-scharfen Glasur.',
     'allergen.note': 'Bitte informieren Sie unser Personal vor der Bestellung über etwaige Allergien — vollständige Zutateninformationen sind auf Anfrage erhältlich.',
-    'order.title': 'Online bestellen', 'order.sub': 'Die vollständige Speisekarte mit aktuellen Preisen finden Sie bei unseren Lieferpartnern — oder rufen Sie uns einfach direkt an.',
+    'order.title': 'Online bestellen',
     'order.wolt': 'Bei Wolt bestellen', 'order.foody': 'Bei Foody bestellen',
     'reviews.title': 'Was unsere Gäste sagen', 'reviews.sub': 'Unsere Bewertung auf TripAdvisor.', 'reviews.readBtn': 'Bewertungen lesen', 'reviews.count': '/ 5 · 24 Bewertungen',
     'footer.tagline': 'Thailändisches, Chinesisches & Sushi-Restaurant',
     'footer.fine': 'Die Öffnungszeiten können an Feiertagen abweichen — bitte rufen Sie vorher an, um sie zu bestätigen.'
   },
   fr: {
-    'nav.location': 'Adresse et horaires', 'nav.dishes': 'Nos plats phares', 'nav.order': 'Commander en ligne',
+    'nav.gallery': 'Galerie', 'nav.location': 'Adresse et horaires', 'nav.dishes': 'Nos plats phares', 'nav.menu': 'Menu complet', 'nav.order': 'Commander en ligne',
+    'dishes.viewMenuBtn': '📋 Voir le menu complet (PDF)',
+    'gallery.comingSoon': 'Photos bientôt disponibles',
     'brand.tagline': 'Restaurant thaïlandais, chinois & sushi, Kato Paphos',
     'hero.tag': "Restaurant asiatique à Kato Paphos proposant cuisine thaïlandaise, chinoise et sushi. Également disponible à emporter et en livraison.",
     'hero.starsSuffix': 'sur 5 (24 avis) sur TripAdvisor',
@@ -586,14 +716,16 @@ var translations = {
     'dish3.desc': 'Soupe thaïlandaise pimentée et acidulée classique, et soupe crémeuse à la noix de coco, préparées fraîches à la commande.',
     'dish4.desc': 'Une entrée préférée de nos clients — chou-fleur croustillant dans un glaçage doux et épicé.',
     'allergen.note': 'Merci d\'informer notre personnel de toute allergie avant de commander — la liste complète des ingrédients est disponible sur demande.',
-    'order.title': 'Commander en ligne', 'order.sub': 'Le menu complet avec les prix actuels se trouve chez nos partenaires de livraison — ou appelez-nous directement.',
+    'order.title': 'Commander en ligne',
     'order.wolt': 'Commander sur Wolt', 'order.foody': 'Commander sur Foody',
     'reviews.title': 'Avis de nos clients', 'reviews.sub': 'Notre note sur TripAdvisor.', 'reviews.readBtn': 'Voir les avis', 'reviews.count': '/ 5 · 24 avis',
     'footer.tagline': 'Restaurant thaïlandais, chinois & sushi',
     'footer.fine': 'Les horaires peuvent varier les jours fériés — merci d\'appeler pour confirmer.'
   },
   pl: {
-    'nav.location': 'Lokalizacja i godziny otwarcia', 'nav.dishes': 'Nasze popularne dania', 'nav.order': 'Zamów online',
+    'nav.gallery': 'Galeria', 'nav.location': 'Lokalizacja i godziny otwarcia', 'nav.dishes': 'Nasze popularne dania', 'nav.menu': 'Pełne menu', 'nav.order': 'Zamów online',
+    'dishes.viewMenuBtn': '📋 Zobacz pełne menu (PDF)',
+    'gallery.comingSoon': 'Zdjęcia wkrótce',
     'brand.tagline': 'Restauracja tajska, chińska i sushi, Kato Pafos',
     'hero.tag': 'Restauracja azjatycka w Kato Pafos serwująca kuchnię tajską, chińską i sushi. Dostępne również na wynos i z dostawą.',
     'hero.starsSuffix': 'na 5 (24 opinii) na TripAdvisor',
@@ -612,14 +744,16 @@ var translations = {
     'dish3.desc': 'Klasyczna tajska ostro-kwaśna zupa oraz kremowa zupa kokosowa, przygotowywane świeżo na zamówienie.',
     'dish4.desc': 'Ulubiona przystawka naszych gości — chrupiący kalafior w słodko-pikantnej glazurze.',
     'allergen.note': 'Prosimy poinformować nasz personel o wszelkich alergiach przed złożeniem zamówienia — pełne informacje o składnikach dostępne na życzenie.',
-    'order.title': 'Zamów online', 'order.sub': 'Pełne menu z aktualnymi cenami znajdziesz u naszych partnerów dostawy — albo po prostu zadzwoń bezpośrednio do nas.',
+    'order.title': 'Zamów online',
     'order.wolt': 'Zamów na Wolt', 'order.foody': 'Zamów na Foody',
     'reviews.title': 'Opinie naszych gości', 'reviews.sub': 'Nasza ocena na TripAdvisor.', 'reviews.readBtn': 'Czytaj opinie', 'reviews.count': '/ 5 · 24 opinii',
     'footer.tagline': 'Restauracja tajska, chińska i sushi',
     'footer.fine': 'Godziny otwarcia mogą się zmieniać w święta — prosimy zadzwonić, aby potwierdzić.'
   },
   he: {
-    'nav.location': 'מיקום ושעות פתיחה', 'nav.dishes': 'המנות שלנו', 'nav.order': 'הזמנה אונליין',
+    'nav.gallery': 'גלריה', 'nav.location': 'מיקום ושעות פתיחה', 'nav.dishes': 'המנות שלנו', 'nav.menu': 'התפריט המלא', 'nav.order': 'הזמנה אונליין',
+    'dishes.viewMenuBtn': '📋 צפו בתפריט המלא (PDF)',
+    'gallery.comingSoon': 'תמונות בקרוב',
     'brand.tagline': 'מסעדה תאילנדית, סינית וסושי, קאטו פאפוס',
     'hero.tag': 'מסעדה אסייתית בקאטו פאפוס המגישה אוכל תאילנדי, סיני וסושי. זמין גם לאיסוף עצמי ולמשלוח.',
     'hero.starsSuffix': 'מתוך 5 (24 ביקורות) ב-TripAdvisor',
@@ -638,7 +772,7 @@ var translations = {
     'dish3.desc': 'מרק חמוץ-חריף תאילנדי קלאסי, ומרק קוקוס קרמי, מוכנים טריים לפי הזמנה.',
     'dish4.desc': 'מנה פותחת אהובה על האורחים שלנו — כרובית פריכה ברוטב מתוק-חריף.',
     'allergen.note': 'אנא עדכנו את הצוות שלנו לגבי כל אלרגיה לפני ההזמנה — פרטי הרכיבים המלאים זמינים לפי בקשה.',
-    'order.title': 'הזמנה אונליין', 'order.sub': 'התפריט המלא עם המחירים העדכניים נמצא אצל שותפי המשלוחים שלנו — או פשוט התקשרו אלינו ישירות.',
+    'order.title': 'הזמנה אונליין',
     'order.wolt': 'הזמינו דרך Wolt', 'order.foody': 'הזמינו דרך Foody',
     'reviews.title': 'מה אומרים עלינו', 'reviews.sub': 'הדירוג שלנו ב-TripAdvisor.', 'reviews.readBtn': 'קראו ביקורות', 'reviews.count': '/ 5 · 24 ביקורות',
     'footer.tagline': 'מסעדה תאילנדית, סינית וסושי',
