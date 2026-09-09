@@ -378,7 +378,8 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
       <nav class="links">
         <a href="#location" data-i18n="nav.location">Location &amp; hours</a>
         <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
-        <a href="#dishes" data-i18n="nav.dishes">Menu highlights</a>
+        <!-- Menu highlights temporarily disabled — see #dishes below -->
+        <a href="#dishes" data-i18n="nav.dishes" hidden>Menu highlights</a>
         <a href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
         <a href="#order" data-i18n="nav.order">Order online</a>
       </nav>
@@ -407,6 +408,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <div class="cta-row">
       <a class="btn primary" href="tel:+35796000306"><span data-i18n="hero.callBtn">Call to book</span> <span class="nowrap">· 96 000306</span></a>
       <a class="btn ghost" href="#order" data-i18n="hero.orderBtn">Order online</a>
+      <a class="btn ghost" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
     </div>
   </div>
 </section>
@@ -488,7 +490,13 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
   </div>
 </section>
 
-<section id="dishes">
+<!-- TEMPORARILY DISABLED (hidden attribute below): waiting on real dish
+     photos + curated descriptions from the owner. To bring this back,
+     just delete the `hidden` attribute on the section below (and on its
+     nav link above) — the content itself is untouched. The full menu
+     PDF stays reachable via the separate "Full menu" nav link either
+     way, so nothing is lost by hiding this section. -->
+<section id="dishes" hidden>
   <div class="wrap">
     <h2 class="section-title" data-i18n="dishes.title">What we're known for</h2>
     <p class="section-sub" data-i18n="dishes.sub">A taste of the menu — ask in-store or on the phone for the full list.</p>
