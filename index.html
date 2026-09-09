@@ -339,6 +339,13 @@ p.section-sub{
 }
 
 /* ---------- reviews ---------- */
+/* White background (like #gallery) so this section reads as its own
+   block instead of blending into #order right above it — both are
+   fairly sparse content (a few small icons / a single score card), so
+   two of them back-to-back on the same cream background was reading
+   as one oversized blank gap even though the padding is identical to
+   every other section. */
+#reviews{ background: var(--paper); }
 .review-card{
   background: var(--paper); border-radius: var(--radius); padding:26px;
   box-shadow: var(--shadow); max-width: 420px; margin: 0 auto; text-align:center;
