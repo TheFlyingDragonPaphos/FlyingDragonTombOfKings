@@ -138,13 +138,13 @@ nav.links a:hover{ opacity:1; color:var(--red); }
 .lang-select:hover{ border-color: var(--red); }
 
 /* ---------- hero ---------- */
-/* No restaurant photo yet (coming later) — red gradient wash for now,
-   same treatment Emba's hero uses under its photo. When a photo is
-   ready, add "url('assets/hero.jpg') center 30% / cover no-repeat,"
-   right before the var(--cream) fallback below and it'll show through
-   the same wash automatically — no other changes needed. */
 .hero{
-  background: linear-gradient(155deg, var(--red) 0%, var(--red-dark) 100%);
+  /* Restaurant's own painting (the red Buddha piece), faded under a red
+     wash so it reads as texture/atmosphere rather than competing with
+     the hero text — same treatment as Emba's hero. */
+  background:
+    linear-gradient(155deg, rgba(200,16,46,0.68) 0%, rgba(143,12,32,0.75) 100%),
+    url('assets/painting.jpg') center 30% / cover no-repeat;
   padding: 64px 24px 56px;
   text-align:center;
 }
@@ -270,20 +270,19 @@ p.section-sub{
    from its subtitle. */
 #gallery .section-title{ margin-bottom: 32px; }
 .gallery-grid{
-  display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;
-}
-.gallery-grid .gallery-tile{
-  width:100%; height:200px; border-radius: var(--radius); box-shadow: var(--shadow);
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  background: linear-gradient(155deg, var(--red) 0%, var(--red-dark) 100%);
-  color:#f7e9dd; font-size:0.85rem; padding:16px;
+  display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;
 }
 .gallery-grid img{
-  width:100%; height:200px; object-fit:cover;
+  /* All 4 photos are now landscape at close to the same 4:3 ratio, so a
+     shared aspect-ratio + cover keeps every tile the same size/shape
+     with only a negligible crop (rather than the very different shapes
+     from before, when one photo was portrait). Bigger 2-column tiles
+     instead of 4, per feedback that the previous grid was too small
+     to make out. */
+  width:100%; aspect-ratio: 4/3; display:block; object-fit:cover;
   border-radius: var(--radius); box-shadow: var(--shadow);
 }
-@media (max-width: 720px){ .gallery-grid{ grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 420px){ .gallery-grid{ grid-template-columns: 1fr; } .gallery-grid img, .gallery-grid .gallery-tile{ height:220px; } }
+@media (max-width: 560px){ .gallery-grid{ grid-template-columns: 1fr; } }
 
 /* ---------- dishes ---------- */
 /* Fixed 2 columns so 4 dish cards form an even 2x2 grid instead of
@@ -480,15 +479,11 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
          the nav link in sync without a separate set of translations. -->
     <h2 class="section-title" data-i18n="nav.gallery">Gallery</h2>
 
-    <!-- EDIT GALLERY PHOTOS HERE: replace each .gallery-tile div below
-         with an <img src="assets/your-photo.jpg" alt="..."> once real
-         photos are available (outside, dining room, dishes), matching
-         the pattern used on the Emba site's gallery section. -->
     <div class="gallery-grid">
-      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
-      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
-      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
-      <div class="gallery-tile" data-i18n="gallery.comingSoon">Photos coming soon</div>
+      <img src="assets/exterior.jpg" alt="Outside The Flying Dragon Asian Kitchen">
+      <img src="assets/seating.jpg" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
+      <img src="assets/dining.jpg" alt="Dining room at The Flying Dragon Asian Kitchen">
+      <img src="assets/dragon.jpg" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
     </div>
   </div>
 </section>
@@ -590,7 +585,6 @@ var translations = {
   en: {
     'nav.gallery': 'Gallery', 'nav.location': 'Location & hours', 'nav.dishes': 'Menu highlights', 'nav.menu': 'Full menu', 'nav.order': 'Order online',
     'dishes.viewMenuBtn': '📋 View full menu (PDF)',
-    'gallery.comingSoon': 'Photos coming soon',
     'brand.tagline': 'Thai, Chinese & Sushi Restaurant, Kato Paphos',
     'hero.tag': 'Dine-in Asian restaurant in Kato Paphos serving Thai, Chinese and sushi. Also available for takeaway and delivery.',
     'hero.starsSuffix': 'out of 5 (24 reviews) on TripAdvisor',
@@ -618,7 +612,6 @@ var translations = {
   el: {
     'nav.gallery': 'Φωτογραφίες', 'nav.location': 'Ώρες & Τοποθεσία', 'nav.dishes': 'Προτεινόμενα πιάτα', 'nav.menu': 'Πλήρες μενού', 'nav.order': 'Παραγγελία online',
     'dishes.viewMenuBtn': '📋 Δείτε το πλήρες μενού (PDF)',
-    'gallery.comingSoon': 'Φωτογραφίες σύντομα',
     'brand.tagline': 'Ταϊλανδέζικο, Κινέζικο & Sushi Εστιατόριο, Κάτω Πάφος',
     'hero.tag': 'Εστιατόριο ασιατικής κουζίνας στην Κάτω Πάφο με ταϊλανδέζικα, κινέζικα πιάτα και sushi. Διαθέσιμο επίσης για take away και delivery.',
     'hero.starsSuffix': 'στα 5 (24 κριτικές) στο TripAdvisor',
@@ -646,7 +639,6 @@ var translations = {
   ru: {
     'nav.gallery': 'Фотогалерея', 'nav.location': 'Адрес и часы работы', 'nav.dishes': 'Популярные блюда', 'nav.menu': 'Полное меню', 'nav.order': 'Заказать онлайн',
     'dishes.viewMenuBtn': '📋 Посмотреть полное меню (PDF)',
-    'gallery.comingSoon': 'Фото скоро появятся',
     'brand.tagline': 'Тайский, китайский ресторан и суши, Като Пафос',
     'hero.tag': 'Азиатский ресторан в Като Пафосе с тайской, китайской кухней и суши. Также доступны навынос и доставка.',
     'hero.starsSuffix': 'из 5 (24 отзывов) на TripAdvisor',
@@ -674,7 +666,6 @@ var translations = {
   de: {
     'nav.gallery': 'Galerie', 'nav.location': 'Standort & Öffnungszeiten', 'nav.dishes': 'Beliebte Gerichte', 'nav.menu': 'Vollständige Speisekarte', 'nav.order': 'Online bestellen',
     'dishes.viewMenuBtn': '📋 Vollständige Speisekarte ansehen (PDF)',
-    'gallery.comingSoon': 'Fotos folgen in Kürze',
     'brand.tagline': 'Thailändisches, Chinesisches & Sushi-Restaurant, Kato Paphos',
     'hero.tag': 'Asiatisches Restaurant in Kato Paphos mit thailändischer, chinesischer Küche und Sushi. Auch zum Mitnehmen und liefern lassen erhältlich.',
     'hero.starsSuffix': 'von 5 (24 Bewertungen) auf TripAdvisor',
@@ -702,7 +693,6 @@ var translations = {
   fr: {
     'nav.gallery': 'Galerie', 'nav.location': 'Adresse et horaires', 'nav.dishes': 'Nos plats phares', 'nav.menu': 'Menu complet', 'nav.order': 'Commander en ligne',
     'dishes.viewMenuBtn': '📋 Voir le menu complet (PDF)',
-    'gallery.comingSoon': 'Photos bientôt disponibles',
     'brand.tagline': 'Restaurant thaïlandais, chinois & sushi, Kato Paphos',
     'hero.tag': "Restaurant asiatique à Kato Paphos proposant cuisine thaïlandaise, chinoise et sushi. Également disponible à emporter et en livraison.",
     'hero.starsSuffix': 'sur 5 (24 avis) sur TripAdvisor',
@@ -730,7 +720,6 @@ var translations = {
   pl: {
     'nav.gallery': 'Galeria', 'nav.location': 'Lokalizacja i godziny otwarcia', 'nav.dishes': 'Nasze popularne dania', 'nav.menu': 'Pełne menu', 'nav.order': 'Zamów online',
     'dishes.viewMenuBtn': '📋 Zobacz pełne menu (PDF)',
-    'gallery.comingSoon': 'Zdjęcia wkrótce',
     'brand.tagline': 'Restauracja tajska, chińska i sushi, Kato Pafos',
     'hero.tag': 'Restauracja azjatycka w Kato Pafos serwująca kuchnię tajską, chińską i sushi. Dostępne również na wynos i z dostawą.',
     'hero.starsSuffix': 'na 5 (24 opinii) na TripAdvisor',
@@ -758,7 +747,6 @@ var translations = {
   he: {
     'nav.gallery': 'גלריה', 'nav.location': 'מיקום ושעות פתיחה', 'nav.dishes': 'המנות שלנו', 'nav.menu': 'התפריט המלא', 'nav.order': 'הזמנה אונליין',
     'dishes.viewMenuBtn': '📋 צפו בתפריט המלא (PDF)',
-    'gallery.comingSoon': 'תמונות בקרוב',
     'brand.tagline': 'מסעדה תאילנדית, סינית וסושי, קאטו פאפוס',
     'hero.tag': 'מסעדה אסייתית בקאטו פאפוס המגישה אוכל תאילנדי, סיני וסושי. זמין גם לאיסוף עצמי ולמשלוח.',
     'hero.starsSuffix': 'מתוך 5 (24 ביקורות) ב-TripAdvisor',
