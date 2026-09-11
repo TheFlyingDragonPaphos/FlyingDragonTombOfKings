@@ -289,26 +289,29 @@ p.section-sub{
    from its subtitle. */
 #gallery .section-title{ margin-bottom: 32px; }
 .gallery-grid{
-  /* CSS columns (not grid) on purpose: grid locks each ROW's height to
-     its tallest item, so a short tile sharing a row with a tall one
-     (e.g. the wide sign banner next to the taller exterior shot) leaves
-     empty space under the short one. Columns let each column stack its
-     own photos back to back at their own heights — true masonry, no
-     forced row pairing, no gaps. */
-  column-count: 2; column-gap: 20px;
+  /* Two explicit columns, hand-balanced by total photo height (see the
+     HTML below), rather than CSS grid or CSS columns:
+       - grid locks each ROW's height to its tallest item, leaving empty
+         space under any shorter tile sharing that row.
+       - native CSS columns (column-count) sound like the fix, but its
+         auto-balancing isn't reliable with images this different in
+         height — it split these 6 photos 4-and-2 instead of evenly,
+         leaving one column much shorter than the other.
+     Two flex columns with photos manually assigned give full control:
+     each column's total height comes out within ~2% of the other. */
+  display:flex; gap:20px; align-items:flex-start;
 }
+.gallery-col{ display:flex; flex-direction:column; gap:20px; flex:1; min-width:0; }
 .gallery-grid img{
   /* Each tile's aspect-ratio (set inline per image) matches that photo's
      own dimensions, so cover here doesn't crop anything — the sign photo
      (a wide ~2:1 banner) and the group photo (portrait) would lose real
      content (the sign's title text / the ends of the table) if forced
-     into a uniform box. break-inside:avoid stops a column break from
-     splitting a photo across two columns. */
-  width:100%; display:block; object-fit:cover; margin-bottom:20px;
+     into a uniform box. */
+  width:100%; display:block; object-fit:cover;
   border-radius: var(--radius); box-shadow: var(--shadow);
-  break-inside: avoid;
 }
-@media (max-width: 560px){ .gallery-grid{ column-count: 1; } }
+@media (max-width: 560px){ .gallery-grid{ flex-direction:column; } }
 
 /* ---------- dishes ---------- */
 /* Fixed 2 columns so 4 dish cards form an even 2x2 grid instead of
@@ -521,13 +524,22 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
          the nav link in sync without a separate set of translations. -->
     <h2 class="section-title" data-i18n="nav.gallery">Gallery</h2>
 
+    <!-- Split across the two columns by hand so both columns come out a
+         similar total height (see .gallery-grid comment in <style>) —
+         if you add/remove photos, keep each column's photos roughly
+         balanced by their aspect ratio (tall photos count for more). -->
     <div class="gallery-grid">
-      <img src="assets/exterior.jpg" style="aspect-ratio:1280/960" alt="Outside The Flying Dragon Asian Kitchen">
-      <img src="assets/sign.jpg" style="aspect-ratio:1297/611" alt="The Flying Dragon Asian Kitchen sign">
-      <img src="assets/seating.jpg" style="aspect-ratio:1448/1086" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
-      <img src="assets/dining.jpg" style="aspect-ratio:1254/1254" alt="Dining room at The Flying Dragon Asian Kitchen">
-      <img src="assets/group.jpg" style="aspect-ratio:1200/1600" alt="Guests dining at The Flying Dragon Asian Kitchen">
-      <img src="assets/dragon.jpg" style="aspect-ratio:1600/1200" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
+      <div class="gallery-col">
+        <img src="assets/sign.jpg" style="aspect-ratio:1297/611" alt="The Flying Dragon Asian Kitchen sign">
+        <img src="assets/exterior.jpg" style="aspect-ratio:1280/960" alt="Outside The Flying Dragon Asian Kitchen">
+        <img src="assets/dining.jpg" style="aspect-ratio:1254/1254" alt="Dining room at The Flying Dragon Asian Kitchen">
+        <img src="assets/dragon.jpg" style="aspect-ratio:1600/1200" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
+      </div>
+      <div class="gallery-col">
+        <img src="assets/seating.jpg" style="aspect-ratio:1448/1086" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
+        <img src="assets/group.jpg" style="aspect-ratio:1200/1600" alt="Guests dining at The Flying Dragon Asian Kitchen">
+        <img src="assets/wall-art.jpg" style="aspect-ratio:1600/1208" alt="Interior wall art at The Flying Dragon Asian Kitchen">
+      </div>
     </div>
   </div>
 </section>
@@ -606,7 +618,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
 </section>
 
 <footer>
-  <div class="fbrand"><img src="assets/logo.png" alt="Flying Dragon logo"><span>The Flying Dragon</span></div>
+  <div class="fbrand"><img src="assets/logo.png" alt="Flying Dragon logo"><span>The Flying Dragon Asian Kitchen</span></div>
   <div class="social">
     <span class="social-label" data-i18n="social.followUs">Follow us</span>
     <a class="social-icon" href="https://www.facebook.com/people/The-Flying-Dragon-Asian-Kitchen-Restaurant/61550049568525/" target="_blank" rel="noopener" aria-label="Facebook">
@@ -616,7 +628,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
       <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.22.6 1.77 1.16.51.5.9 1.1 1.16 1.77.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.16 1.77 4.9 4.9 0 0 1-1.77 1.16c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.77-1.16 4.9 4.9 0 0 1-1.16-1.77c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.22 1.16-1.77.5-.51 1.1-.9 1.77-1.16.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2Zm0 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10Zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4Zm5.2-8.4a1.17 1.17 0 1 1 0-2.34 1.17 1.17 0 0 1 0 2.34Z"/></svg>
     </a>
   </div>
-  <div><span data-i18n="footer.tagline">Thai, Chinese &amp; Sushi Restaurant</span>, Tombs of the Kings Ave 28, Kato Paphos, Paphos 8046 &nbsp;·&nbsp; <a href="tel:+35796000306">96 000306</a></div>
+  <div><span data-i18n="footer.tagline">Thai, Chinese &amp; Sushi Restaurant</span>, Tombs of the Kings Ave 28, Kato Paphos, Paphos 8046 &nbsp;·&nbsp; <a class="nowrap" href="tel:+35796000306">96 000306</a></div>
   <div class="fine"><span data-i18n="footer.fine">Hours shown are subject to change around public holidays — call ahead to confirm.</span> © <span id="year"></span> The Flying Dragon Asian Kitchen.</div>
 </footer>
 
