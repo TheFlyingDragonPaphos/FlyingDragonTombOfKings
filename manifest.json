@@ -1,0 +1,15 @@
+{
+  "name": "The Flying Dragon Asian Kitchen",
+  "short_name": "Flying Dragon",
+  "description": "Thai, Chinese and sushi restaurant in Kato Paphos — dine-in, takeaway and delivery.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff8ec",
+  "theme_color": "#c8102e",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

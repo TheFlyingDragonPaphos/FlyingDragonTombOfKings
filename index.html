@@ -6,6 +6,17 @@
 <title>The Flying Dragon Asian Kitchen | Kato Paphos</title>
 <meta name="description" content="The Flying Dragon Asian Kitchen in Kato Paphos, Cyprus — Thai, Chinese and sushi. Dine-in, takeaway and delivery.">
 <link rel="icon" href="assets/logo.png">
+<!-- "Add to Home Screen" support: manifest.json + these tags let phones
+     install this page as an app icon (red-background dragon logo) that
+     opens full-screen, no browser chrome. Icons are pre-generated PNGs
+     in assets/ (logo composited on the brand red) — regenerate them if
+     logo.png ever changes. -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#c8102e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Flying Dragon">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shojumaru&display=swap">
@@ -292,13 +303,10 @@ p.section-sub{
 @media (max-width: 560px){ .dishes{ grid-template-columns: 1fr; } }
 .dish{
   background: var(--paper); border-radius: var(--radius);
-  padding: 22px; box-shadow: var(--shadow);
+  box-shadow: var(--shadow); overflow:hidden;
 }
-.dish .dish-icon{ margin-bottom:10px; }
-.dish .dish-icon .emoji{ font-size:1.8rem; display:block; }
-.dish .dish-icon img{ width:100%; height:120px; object-fit:cover; border-radius:10px; }
-.dish h4{ margin:0 0 6px; font-size:1.05rem; }
-.dish p{ margin:0; color:var(--muted); font-size:0.9rem; }
+.dish img{ width:100%; height:220px; object-fit:cover; display:block; }
+.dish h4{ margin:0; padding:16px; text-align:center; font-size:1.05rem; }
 .menu-pdf-cta{ text-align:center; margin-top:28px; }
 .allergen-note{
   text-align:center; color: var(--muted); font-size:0.85rem;
@@ -336,6 +344,15 @@ p.section-sub{
 .sr-only{
   position:absolute; width:1px; height:1px; padding:0; margin:-1px;
   overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+}
+.loc-note{
+  color: var(--muted); font-size:0.85rem; line-height:1.5;
+  margin-top: 2px; padding-top:16px;
+  border-top: 1px solid rgba(32,21,18,0.08);
+}
+.order-note{
+  color: var(--muted); font-size:0.85rem; line-height:1.5;
+  text-align:center; margin: -8px auto 0; max-width: 460px;
 }
 
 /* ---------- reviews ---------- */
@@ -385,8 +402,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
       <nav class="links">
         <a href="#location" data-i18n="nav.location">Location &amp; hours</a>
         <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
-        <!-- Menu highlights temporarily disabled — see #dishes below -->
-        <a href="#dishes" data-i18n="nav.dishes" hidden>Menu highlights</a>
+        <a href="#dishes" data-i18n="nav.dishes">Menu highlights</a>
         <a href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
         <a href="#order" data-i18n="nav.order">Order online</a>
       </nav>
@@ -411,7 +427,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <!-- EDIT HERO TEXT HERE -->
     <h1>The Flying Dragon <span>Asian Kitchen</span></h1>
     <p class="tag" data-i18n="hero.tag">Dine-in Asian restaurant in Kato Paphos serving Thai, Chinese and Sushi. Also available for Takeaway and Delivery.</p>
-    <p class="stars">⭐ <b>4.7</b> <span data-i18n="hero.starsSuffix">out of 5 on Google reviews</span></p>
+    <p class="stars">⭐ <b>4.7</b> <span data-i18n="hero.starsSuffix">out of 5 on Google reviews (374)</span></p>
     <div class="cta-row">
       <a class="btn primary" href="tel:+35796000306"><span data-i18n="hero.callBtn">Call to book</span> <span class="nowrap">· 96 000306</span></a>
       <a class="btn ghost" href="#order" data-i18n="hero.orderBtn">Order online</a>
@@ -462,6 +478,8 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
             <tr data-day="5"><td class="day" data-i18n="days.fri">Friday</td><td>1:00pm – 11:00pm</td></tr>
             <tr data-day="6"><td class="day" data-i18n="days.sat">Saturday</td><td>1:00pm – 11:00pm</td></tr>
           </table>
+
+          <p class="loc-note" data-i18n="loc.deliveryNote">Delivery through our delivery partners is available from 11am — dine-in opens at 1pm.</p>
         </div>
 
         <div class="loc-map-col">
@@ -490,8 +508,10 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
 
     <div class="gallery-grid">
       <img src="assets/exterior.jpg" alt="Outside The Flying Dragon Asian Kitchen">
+      <img src="assets/sign.jpg" alt="The Flying Dragon Asian Kitchen sign">
       <img src="assets/seating.jpg" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
       <img src="assets/dining.jpg" alt="Dining room at The Flying Dragon Asian Kitchen">
+      <img src="assets/group.jpg" alt="Guests dining at The Flying Dragon Asian Kitchen">
       <img src="assets/dragon.jpg" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
     </div>
   </div>
@@ -503,36 +523,29 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
      nav link above) — the content itself is untouched. The full menu
      PDF stays reachable via the separate "Full menu" nav link either
      way, so nothing is lost by hiding this section. -->
-<section id="dishes" hidden>
+<section id="dishes">
   <div class="wrap">
-    <h2 class="section-title" data-i18n="dishes.title">What we're known for</h2>
-    <p class="section-sub" data-i18n="dishes.sub">A taste of the menu — ask in-store or on the phone for the full list.</p>
+    <h2 class="section-title" data-i18n="dishes.title">Here are some of our dishes</h2>
 
-    <!-- EDIT MENU HIGHLIGHTS HERE: each .dish is one card. Dish names are
-         kept in their original form across languages (as on most
-         international menus) — only the descriptions are translated.
-         To add a real photo once you have one: replace the <span class="emoji">
-         line with <img src="assets/your-photo.jpg" alt="..."> inside .dish-icon. -->
+    <!-- EDIT MENU HIGHLIGHTS HERE: each .dish is one photo + name card. Dish
+         names are kept in their original form across languages (as on most
+         international menus), so no translation needed for the <h4> text. -->
     <div class="dishes">
       <div class="dish">
-        <div class="dish-icon"><span class="emoji">🍌</span></div>
-        <h4>Banana fritters &amp; ice cream</h4>
-        <p data-i18n="dish1.desc">Our famous dessert — crispy banana fritters served warm with ice cream.</p>
+        <img src="assets/dish-stirfry.jpg" alt="Spicy pork and king prawn stir-fry with French beans">
+        <h4>Spicy Pork &amp; King Prawn Stir-Fry</h4>
       </div>
       <div class="dish">
-        <div class="dish-icon"><span class="emoji">🍣</span></div>
-        <h4>Sushi rolls</h4>
-        <p data-i18n="dish2.desc">Fresh rolls including our signature Flying Dragon roll, California crab, and smoked salmon.</p>
+        <img src="assets/dish-padthai.jpg" alt="Chicken Pad Thai">
+        <h4>Chicken Pad Thai</h4>
       </div>
       <div class="dish">
-        <div class="dish-icon"><span class="emoji">🍜</span></div>
-        <h4>Tom Yum &amp; Tom Ka</h4>
-        <p data-i18n="dish3.desc">Classic Thai hot and sour, and creamy coconut soup, made fresh to order.</p>
+        <img src="assets/dish-sushi.jpg" alt="Popcorn prawn roll sushi">
+        <h4>Popcorn Prawn Roll</h4>
       </div>
       <div class="dish">
-        <div class="dish-icon"><span class="emoji">🌶️</span></div>
-        <h4>Korean spicy cauliflower</h4>
-        <p data-i18n="dish4.desc">A guest favourite starter — crispy cauliflower in a sweet, spicy glaze.</p>
+        <img src="assets/dish-tofu.jpg" alt="Crispy tofu in black bean sauce">
+        <h4>Crispy Tofu &amp; Black Bean Sauce</h4>
       </div>
     </div>
 
@@ -547,6 +560,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
 <section id="order">
   <div class="wrap menu-cta">
     <h2 class="section-title" data-i18n="order.title">Order online</h2>
+    <p class="order-note" data-i18n="loc.deliveryNote">Delivery through our delivery partners is available from 11am — dine-in opens at 1pm.</p>
     <div class="order-row">
       <a class="order-logo-btn wolt" href="https://wolt.com/en/cyp/paphos/restaurant/the-flying-dragon-kato-paphos" target="_blank" rel="noopener">
         <img src="assets/delivery/wolt.svg" alt="" loading="lazy">
@@ -569,7 +583,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <h2 class="section-title" data-i18n="reviews.title">What people say</h2>
     <p class="section-sub" data-i18n="reviews.sub">Our review score on Google reviews.</p>
     <div class="review-card">
-      <div class="score">4.7 <small><span data-i18n="reviews.count">/ 5</span></small></div>
+      <div class="score">4.7 <small><span data-i18n="reviews.count">/ 5 · 374 reviews</span></small></div>
       <p>The Flying Dragon Asian Kitchen, Kato Paphos</p>
       <a class="btn ghost small" href="https://maps.app.goo.gl/C97yYFG4CURZxjRL6" target="_blank" rel="noopener" data-i18n="reviews.readBtn">Read reviews</a>
     </div>
@@ -602,7 +616,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 View full menu (PDF)',
     'brand.tagline': 'Thai, Chinese & Sushi Restaurant, Kato Paphos',
     'hero.tag': 'Dine-in Asian restaurant in Kato Paphos serving Thai, Chinese and Sushi. Also available for Takeaway and Delivery.',
-    'hero.starsSuffix': 'out of 5 on Google reviews',
+    'hero.starsSuffix': 'out of 5 on Google reviews (374)',
     'hero.callBtn': 'Call to book', 'hero.orderBtn': 'Order online',
     'loc.title': 'Location & hours', 'loc.sub': 'Dine-in, takeaway and delivery.', 'loc.kind': 'Dine-in · Takeaway · Delivery',
     'loc.directions': 'Get directions →', 'loc.callBtn': 'Call to book', 'social.followUs': 'Follow us',
@@ -610,17 +624,12 @@ var translations = {
     'status.openPrefix': 'Open now · closes ', 'status.closedNow': 'Closed now',
     'status.closedOpensPrefix': 'Closed · opens ', 'status.closedOpensSuffix': ' today',
     'days.sun': 'Sunday', 'days.mon': 'Monday', 'days.tue': 'Tuesday', 'days.wed': 'Wednesday',
-    'days.thu': 'Thursday', 'days.fri': 'Friday', 'days.sat': 'Saturday', 'hours.closed': 'Closed',
-    'dishes.title': "What we're known for",
-    'dishes.sub': 'A taste of the menu — ask in-store or on the phone for the full list.',
-    'dish1.desc': 'Our famous dessert — crispy banana fritters served warm with ice cream.',
-    'dish2.desc': 'Fresh rolls including our signature Flying Dragon roll, California crab, and smoked salmon.',
-    'dish3.desc': 'Classic Thai hot and sour, and creamy coconut soup, made fresh to order.',
-    'dish4.desc': 'A guest favourite starter — crispy cauliflower in a sweet, spicy glaze.',
+    'days.thu': 'Thursday', 'days.fri': 'Friday', 'days.sat': 'Saturday', 'hours.closed': 'Closed', 'loc.deliveryNote': 'Delivery through our delivery partners is available from 11am — dine-in opens at 1pm.',
+    'dishes.title': 'Here are some of our dishes',
     'allergen.note': 'Please let our staff know of any allergies before ordering — full ingredient information is available on request.',
     'order.title': 'Order online',
     'order.wolt': 'Order on Wolt', 'order.foody': 'Order on Foody', 'order.bolt': 'Order on Bolt Food',
-    'reviews.title': 'What people say', 'reviews.sub': 'Our review score on Google reviews.', 'reviews.readBtn': 'Read reviews', 'reviews.count': '/ 5',
+    'reviews.title': 'What people say', 'reviews.sub': 'Our review score on Google reviews.', 'reviews.readBtn': 'Read reviews', 'reviews.count': '/ 5 · 374 reviews',
     'footer.tagline': 'Thai, Chinese & Sushi Restaurant',
     'footer.fine': 'Hours shown are subject to change around public holidays — call ahead to confirm.'
   },
@@ -629,7 +638,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 Δείτε το πλήρες μενού (PDF)',
     'brand.tagline': 'Ταϊλανδέζικο, Κινέζικο & Sushi Εστιατόριο, Κάτω Πάφος',
     'hero.tag': 'Εστιατόριο ασιατικής κουζίνας στην Κάτω Πάφο με ταϊλανδέζικα, κινέζικα πιάτα και sushi. Διαθέσιμο επίσης για take away και delivery.',
-    'hero.starsSuffix': 'στα 5 στις κριτικές Google',
+    'hero.starsSuffix': 'στα 5 στις 374 κριτικές Google',
     'hero.callBtn': 'Καλέστε για κράτηση', 'hero.orderBtn': 'Παραγγελία online',
     'loc.title': 'Ώρες & Τοποθεσία', 'loc.sub': 'Εστιατόριο, take away και delivery.', 'loc.kind': 'Εστιατόριο · Take Away · Delivery',
     'loc.directions': 'Οδηγίες διαδρομής →', 'loc.callBtn': 'Καλέστε για κράτηση', 'social.followUs': 'Ακολουθήστε μας',
@@ -637,17 +646,12 @@ var translations = {
     'status.openPrefix': 'Ανοιχτά τώρα · κλείνει στις ', 'status.closedNow': 'Κλειστά τώρα',
     'status.closedOpensPrefix': 'Κλειστά · ανοίγει στις ', 'status.closedOpensSuffix': ' σήμερα',
     'days.sun': 'Κυριακή', 'days.mon': 'Δευτέρα', 'days.tue': 'Τρίτη', 'days.wed': 'Τετάρτη',
-    'days.thu': 'Πέμπτη', 'days.fri': 'Παρασκευή', 'days.sat': 'Σάββατο', 'hours.closed': 'Κλειστά',
-    'dishes.title': 'Τι μας ξεχωρίζει',
-    'dishes.sub': 'Μια γεύση από το μενού μας — ρωτήστε στο κατάστημα ή στο τηλέφωνο για το πλήρες μενού.',
-    'dish1.desc': 'Το διάσημο επιδόρπιό μας — τραγανές τηγανητές μπανάνες σερβιρισμένες ζεστές με παγωτό.',
-    'dish2.desc': 'Φρέσκα sushi rolls, όπως το εμβληματικό μας Flying Dragon roll, California crab και καπνιστός σολομός.',
-    'dish3.desc': 'Κλασική ταϊλανδέζικη πικάντικη-ξινή σούπα, και κρεμώδης σούπα καρύδας, φτιαγμένες φρέσκες κατά παραγγελία.',
-    'dish4.desc': 'Αγαπημένο ορεκτικό των πελατών μας — τραγανό κουνουπίδι σε γλυκόπικάντικη γλάζα.',
+    'days.thu': 'Πέμπτη', 'days.fri': 'Παρασκευή', 'days.sat': 'Σάββατο', 'hours.closed': 'Κλειστά', 'loc.deliveryNote': 'Η παράδοση μέσω των συνεργατών διανομής μας είναι διαθέσιμη από τις 11πμ — η εστίαση εντός καταστήματος ξεκινά στη 1μμ.',
+    'dishes.title': 'Μερικά από τα πιάτα μας',
     'allergen.note': 'Παρακαλούμε ενημερώστε το προσωπικό μας για τυχόν αλλεργίες πριν παραγγείλετε — πλήρεις πληροφορίες συστατικών διαθέσιμες κατόπιν αιτήματος.',
     'order.title': 'Παραγγελία online',
     'order.wolt': 'Παραγγελία στο Wolt', 'order.foody': 'Παραγγελία στο Foody', 'order.bolt': 'Παραγγελία στο Bolt Food',
-    'reviews.title': 'Τι λένε οι πελάτες μας', 'reviews.sub': 'Η βαθμολογία μας στις κριτικές Google.', 'reviews.readBtn': 'Δείτε τις κριτικές', 'reviews.count': '/ 5',
+    'reviews.title': 'Τι λένε οι πελάτες μας', 'reviews.sub': 'Η βαθμολογία μας στις κριτικές Google.', 'reviews.readBtn': 'Δείτε τις κριτικές', 'reviews.count': '/ 5 · 374 κριτικές',
     'footer.tagline': 'Ταϊλανδέζικο, Κινέζικο & Sushi Εστιατόριο',
     'footer.fine': 'Το ωράριο ενδέχεται να αλλάξει τις αργίες — καλέστε μας για επιβεβαίωση.'
   },
@@ -656,7 +660,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 Посмотреть полное меню (PDF)',
     'brand.tagline': 'Тайский, китайский ресторан и суши, Като Пафос',
     'hero.tag': 'Азиатский ресторан в Като Пафосе с тайской, китайской кухней и суши. Также доступны навынос и доставка.',
-    'hero.starsSuffix': 'из 5 в отзывах Google',
+    'hero.starsSuffix': 'из 5 в 374 отзывах Google',
     'hero.callBtn': 'Позвонить и забронировать', 'hero.orderBtn': 'Заказать онлайн',
     'loc.title': 'Адрес и часы работы', 'loc.sub': 'Зал, навынос и доставка.', 'loc.kind': 'Зал · Навынос · Доставка',
     'loc.directions': 'Проложить маршрут →', 'loc.callBtn': 'Позвонить и забронировать', 'social.followUs': 'Мы в соцсетях',
@@ -664,17 +668,12 @@ var translations = {
     'status.openPrefix': 'Открыто сейчас · закрывается в ', 'status.closedNow': 'Сейчас закрыто',
     'status.closedOpensPrefix': 'Закрыто · открывается в ', 'status.closedOpensSuffix': ' сегодня',
     'days.sun': 'Воскресенье', 'days.mon': 'Понедельник', 'days.tue': 'Вторник', 'days.wed': 'Среда',
-    'days.thu': 'Четверг', 'days.fri': 'Пятница', 'days.sat': 'Суббота', 'hours.closed': 'Закрыто',
-    'dishes.title': 'Наши фирменные блюда',
-    'dishes.sub': 'Немного о нашем меню — спросите в ресторане или по телефону полное меню.',
-    'dish1.desc': 'Наш фирменный десерт — хрустящие банановые фритюры, подаются тёплыми с мороженым.',
-    'dish2.desc': 'Свежие роллы, включая наш фирменный ролл Flying Dragon, California crab и ролл с копчёным лососем.',
-    'dish3.desc': 'Классический тайский острый и кислый суп, а также сливочный суп на кокосовом молоке, готовятся свежими на заказ.',
-    'dish4.desc': 'Любимая закуска наших гостей — хрустящая цветная капуста в сладко-острой глазури.',
+    'days.thu': 'Четверг', 'days.fri': 'Пятница', 'days.sat': 'Суббота', 'hours.closed': 'Закрыто', 'loc.deliveryNote': 'Доставка через наших партнёров по доставке доступна с 11:00 — зал открывается в 13:00.',
+    'dishes.title': 'Вот некоторые из наших блюд',
     'allergen.note': 'Пожалуйста, сообщите нашему персоналу о любых аллергиях перед заказом — полная информация о составе доступна по запросу.',
     'order.title': 'Заказать онлайн',
     'order.wolt': 'Заказать через Wolt', 'order.foody': 'Заказать через Foody', 'order.bolt': 'Заказать через Bolt Food',
-    'reviews.title': 'Отзывы наших гостей', 'reviews.sub': 'Наш рейтинг в отзывах Google.', 'reviews.readBtn': 'Читать отзывы', 'reviews.count': '/ 5',
+    'reviews.title': 'Отзывы наших гостей', 'reviews.sub': 'Наш рейтинг в отзывах Google.', 'reviews.readBtn': 'Читать отзывы', 'reviews.count': '/ 5 · 374 отзыва',
     'footer.tagline': 'Тайский, китайский ресторан и суши',
     'footer.fine': 'Часы работы могут меняться в праздничные дни — пожалуйста, звоните заранее для уточнения.'
   },
@@ -683,7 +682,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 Vollständige Speisekarte ansehen (PDF)',
     'brand.tagline': 'Thailändisches, Chinesisches & Sushi-Restaurant, Kato Paphos',
     'hero.tag': 'Asiatisches Restaurant in Kato Paphos mit thailändischer, chinesischer Küche und Sushi. Auch zum Mitnehmen und liefern lassen erhältlich.',
-    'hero.starsSuffix': 'von 5 in Google-Bewertungen',
+    'hero.starsSuffix': 'von 5 in 374 Google-Bewertungen',
     'hero.callBtn': 'Zum Reservieren anrufen', 'hero.orderBtn': 'Online bestellen',
     'loc.title': 'Standort & Öffnungszeiten', 'loc.sub': 'Restaurant, Abholung und Lieferung.', 'loc.kind': 'Restaurant · Abholung · Lieferung',
     'loc.directions': 'Route anzeigen →', 'loc.callBtn': 'Zum Reservieren anrufen', 'social.followUs': 'Folgen Sie uns',
@@ -691,17 +690,12 @@ var translations = {
     'status.openPrefix': 'Jetzt geöffnet · schließt um ', 'status.closedNow': 'Momentan geschlossen',
     'status.closedOpensPrefix': 'Geschlossen · öffnet um ', 'status.closedOpensSuffix': ' Uhr heute',
     'days.sun': 'Sonntag', 'days.mon': 'Montag', 'days.tue': 'Dienstag', 'days.wed': 'Mittwoch',
-    'days.thu': 'Donnerstag', 'days.fri': 'Freitag', 'days.sat': 'Samstag', 'hours.closed': 'Geschlossen',
-    'dishes.title': 'Wofür wir bekannt sind',
-    'dishes.sub': 'Ein Vorgeschmack auf unsere Speisekarte — nach der vollständigen Karte fragen Sie einfach vor Ort oder am Telefon.',
-    'dish1.desc': 'Unser berühmtes Dessert — knusprige Bananenbeignets, warm serviert mit Eis.',
-    'dish2.desc': 'Frische Rollen, darunter unsere Signature Flying-Dragon-Rolle, California Crab und geräucherter Lachs.',
-    'dish3.desc': 'Klassische thailändische scharf-saure Suppe sowie eine cremige Kokossuppe, jeweils frisch zubereitet.',
-    'dish4.desc': 'Ein Favorit unserer Gäste — knuspriger Blumenkohl in einer süß-scharfen Glasur.',
+    'days.thu': 'Donnerstag', 'days.fri': 'Freitag', 'days.sat': 'Samstag', 'hours.closed': 'Geschlossen', 'loc.deliveryNote': 'Lieferung über unsere Lieferpartner ist ab 11 Uhr möglich — der Gastraum öffnet um 13 Uhr.',
+    'dishes.title': 'Hier sind einige unserer Gerichte',
     'allergen.note': 'Bitte informieren Sie unser Personal vor der Bestellung über etwaige Allergien — vollständige Zutateninformationen sind auf Anfrage erhältlich.',
     'order.title': 'Online bestellen',
     'order.wolt': 'Bei Wolt bestellen', 'order.foody': 'Bei Foody bestellen', 'order.bolt': 'Bei Bolt Food bestellen',
-    'reviews.title': 'Was unsere Gäste sagen', 'reviews.sub': 'Unsere Bewertung in Google-Bewertungen.', 'reviews.readBtn': 'Bewertungen lesen', 'reviews.count': '/ 5',
+    'reviews.title': 'Was unsere Gäste sagen', 'reviews.sub': 'Unsere Bewertung in Google-Bewertungen.', 'reviews.readBtn': 'Bewertungen lesen', 'reviews.count': '/ 5 · 374 Bewertungen',
     'footer.tagline': 'Thailändisches, Chinesisches & Sushi-Restaurant',
     'footer.fine': 'Die Öffnungszeiten können an Feiertagen abweichen — bitte rufen Sie vorher an, um sie zu bestätigen.'
   },
@@ -710,7 +704,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 Voir le menu complet (PDF)',
     'brand.tagline': 'Restaurant thaïlandais, chinois & sushi, Kato Paphos',
     'hero.tag': "Restaurant asiatique à Kato Paphos proposant cuisine thaïlandaise, chinoise et sushi. Également disponible à emporter et en livraison.",
-    'hero.starsSuffix': 'sur 5 sur les avis Google',
+    'hero.starsSuffix': 'sur 5 sur les 374 avis Google',
     'hero.callBtn': 'Appeler pour réserver', 'hero.orderBtn': 'Commander en ligne',
     'loc.title': 'Adresse et horaires', 'loc.sub': 'Restaurant, à emporter et livraison.', 'loc.kind': 'Restaurant · À emporter · Livraison',
     'loc.directions': 'Itinéraire →', 'loc.callBtn': 'Appeler pour réserver', 'social.followUs': 'Suivez-nous',
@@ -718,17 +712,12 @@ var translations = {
     'status.openPrefix': 'Ouvert maintenant · ferme à ', 'status.closedNow': 'Fermé actuellement',
     'status.closedOpensPrefix': 'Fermé · ouvre à ', 'status.closedOpensSuffix': " aujourd'hui",
     'days.sun': 'Dimanche', 'days.mon': 'Lundi', 'days.tue': 'Mardi', 'days.wed': 'Mercredi',
-    'days.thu': 'Jeudi', 'days.fri': 'Vendredi', 'days.sat': 'Samedi', 'hours.closed': 'Fermé',
-    'dishes.title': 'Nos spécialités',
-    'dishes.sub': 'Un aperçu de notre carte — demandez le menu complet sur place ou par téléphone.',
-    'dish1.desc': 'Notre dessert emblématique — beignets de banane croustillants servis chauds avec de la glace.',
-    'dish2.desc': 'Rolls frais, dont notre roll signature Flying Dragon, le California crab et le saumon fumé.',
-    'dish3.desc': 'Soupe thaïlandaise pimentée et acidulée classique, et soupe crémeuse à la noix de coco, préparées fraîches à la commande.',
-    'dish4.desc': 'Une entrée préférée de nos clients — chou-fleur croustillant dans un glaçage doux et épicé.',
+    'days.thu': 'Jeudi', 'days.fri': 'Vendredi', 'days.sat': 'Samedi', 'hours.closed': 'Fermé', 'loc.deliveryNote': 'La livraison via nos partenaires est disponible dès 11h — la salle ouvre à 13h.',
+    'dishes.title': 'Voici quelques-uns de nos plats',
     'allergen.note': 'Merci d\'informer notre personnel de toute allergie avant de commander — la liste complète des ingrédients est disponible sur demande.',
     'order.title': 'Commander en ligne',
     'order.wolt': 'Commander sur Wolt', 'order.foody': 'Commander sur Foody', 'order.bolt': 'Commander sur Bolt Food',
-    'reviews.title': 'Avis de nos clients', 'reviews.sub': 'Notre note sur les avis Google.', 'reviews.readBtn': 'Voir les avis', 'reviews.count': '/ 5',
+    'reviews.title': 'Avis de nos clients', 'reviews.sub': 'Notre note sur les avis Google.', 'reviews.readBtn': 'Voir les avis', 'reviews.count': '/ 5 · 374 avis',
     'footer.tagline': 'Restaurant thaïlandais, chinois & sushi',
     'footer.fine': 'Les horaires peuvent varier les jours fériés — merci d\'appeler pour confirmer.'
   },
@@ -737,7 +726,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 Zobacz pełne menu (PDF)',
     'brand.tagline': 'Restauracja tajska, chińska i sushi, Kato Pafos',
     'hero.tag': 'Restauracja azjatycka w Kato Pafos serwująca kuchnię tajską, chińską i sushi. Dostępne również na wynos i z dostawą.',
-    'hero.starsSuffix': 'na 5 w recenzjach Google',
+    'hero.starsSuffix': 'na 5 w 374 recenzjach Google',
     'hero.callBtn': 'Zadzwoń, aby zarezerwować', 'hero.orderBtn': 'Zamów online',
     'loc.title': 'Lokalizacja i godziny otwarcia', 'loc.sub': 'Restauracja, na wynos i z dostawą.', 'loc.kind': 'Restauracja · Na wynos · Dostawa',
     'loc.directions': 'Wyznacz trasę →', 'loc.callBtn': 'Zadzwoń, aby zarezerwować', 'social.followUs': 'Obserwuj nas',
@@ -745,17 +734,12 @@ var translations = {
     'status.openPrefix': 'Otwarte teraz · zamyka się o ', 'status.closedNow': 'Obecnie zamknięte',
     'status.closedOpensPrefix': 'Zamknięte · otwiera się o ', 'status.closedOpensSuffix': ' dzisiaj',
     'days.sun': 'Niedziela', 'days.mon': 'Poniedziałek', 'days.tue': 'Wtorek', 'days.wed': 'Środa',
-    'days.thu': 'Czwartek', 'days.fri': 'Piątek', 'days.sat': 'Sobota', 'hours.closed': 'Zamknięte',
-    'dishes.title': 'Z czego jesteśmy znani',
-    'dishes.sub': 'Zajawka naszego menu — o pełną listę dań zapytaj na miejscu lub telefonicznie.',
-    'dish1.desc': 'Nasz słynny deser — chrupiące smażone banany podawane na ciepło z lodami.',
-    'dish2.desc': 'Świeże rolki sushi, w tym nasza autorska rolka Flying Dragon, California crab i wędzony łosoś.',
-    'dish3.desc': 'Klasyczna tajska ostro-kwaśna zupa oraz kremowa zupa kokosowa, przygotowywane świeżo na zamówienie.',
-    'dish4.desc': 'Ulubiona przystawka naszych gości — chrupiący kalafior w słodko-pikantnej glazurze.',
+    'days.thu': 'Czwartek', 'days.fri': 'Piątek', 'days.sat': 'Sobota', 'hours.closed': 'Zamknięte', 'loc.deliveryNote': 'Dostawa za pośrednictwem naszych partnerów dostawy jest dostępna od 11:00 — sala otwiera się o 13:00.',
+    'dishes.title': 'Oto kilka naszych dań',
     'allergen.note': 'Prosimy poinformować nasz personel o wszelkich alergiach przed złożeniem zamówienia — pełne informacje o składnikach dostępne na życzenie.',
     'order.title': 'Zamów online',
     'order.wolt': 'Zamów na Wolt', 'order.foody': 'Zamów na Foody', 'order.bolt': 'Zamów na Bolt Food',
-    'reviews.title': 'Opinie naszych gości', 'reviews.sub': 'Nasza ocena w recenzjach Google.', 'reviews.readBtn': 'Czytaj opinie', 'reviews.count': '/ 5',
+    'reviews.title': 'Opinie naszych gości', 'reviews.sub': 'Nasza ocena w recenzjach Google.', 'reviews.readBtn': 'Czytaj opinie', 'reviews.count': '/ 5 · 374 opinie',
     'footer.tagline': 'Restauracja tajska, chińska i sushi',
     'footer.fine': 'Godziny otwarcia mogą się zmieniać w święta — prosimy zadzwonić, aby potwierdzić.'
   },
@@ -764,7 +748,7 @@ var translations = {
     'dishes.viewMenuBtn': '📋 צפו בתפריט המלא (PDF)',
     'brand.tagline': 'מסעדה תאילנדית, סינית וסושי, קאטו פאפוס',
     'hero.tag': 'מסעדה אסייתית בקאטו פאפוס המגישה אוכל תאילנדי, סיני וסושי. זמין גם לאיסוף עצמי ולמשלוח.',
-    'hero.starsSuffix': 'מתוך 5 בביקורות Google',
+    'hero.starsSuffix': 'מתוך 5 ב-374 ביקורות Google',
     'hero.callBtn': 'התקשרו להזמנת מקום', 'hero.orderBtn': 'הזמנה אונליין',
     'loc.title': 'מיקום ושעות פתיחה', 'loc.sub': 'ישיבה במסעדה, איסוף עצמי ומשלוח.', 'loc.kind': 'ישיבה במסעדה · איסוף עצמי · משלוח',
     'loc.directions': 'קבלת הוראות הגעה ←', 'loc.callBtn': 'התקשרו להזמנת מקום', 'social.followUs': 'עקבו אחרינו',
@@ -772,17 +756,12 @@ var translations = {
     'status.openPrefix': 'פתוח כעת · נסגר בשעה ', 'status.closedNow': 'סגור כרגע',
     'status.closedOpensPrefix': 'סגור · נפתח בשעה ', 'status.closedOpensSuffix': ' היום',
     'days.sun': 'יום ראשון', 'days.mon': 'יום שני', 'days.tue': 'יום שלישי', 'days.wed': 'יום רביעי',
-    'days.thu': 'יום חמישי', 'days.fri': 'יום שישי', 'days.sat': 'יום שבת', 'hours.closed': 'סגור',
-    'dishes.title': 'המנות שאנחנו ידועים בהן',
-    'dishes.sub': 'טעימה מהתפריט שלנו — שאלו אותנו במקום או בטלפון לגבי התפריט המלא.',
-    'dish1.desc': 'הקינוח המפורסם שלנו — בננות מטוגנות פריכות מוגשות חמות עם גלידה.',
-    'dish2.desc': 'רולים טריים, כולל רול הדגל שלנו Flying Dragon, קליפורניה קראב וסלמון מעושן.',
-    'dish3.desc': 'מרק חמוץ-חריף תאילנדי קלאסי, ומרק קוקוס קרמי, מוכנים טריים לפי הזמנה.',
-    'dish4.desc': 'מנה פותחת אהובה על האורחים שלנו — כרובית פריכה ברוטב מתוק-חריף.',
+    'days.thu': 'יום חמישי', 'days.fri': 'יום שישי', 'days.sat': 'יום שבת', 'hours.closed': 'סגור', 'loc.deliveryNote': 'משלוחים דרך שותפי המשלוחים שלנו זמינים החל מ-11:00 — הישיבה במסעדה נפתחת ב-13:00.',
+    'dishes.title': 'הנה כמה מהמנות שלנו',
     'allergen.note': 'אנא עדכנו את הצוות שלנו לגבי כל אלרגיה לפני ההזמנה — פרטי הרכיבים המלאים זמינים לפי בקשה.',
     'order.title': 'הזמנה אונליין',
     'order.wolt': 'הזמינו דרך Wolt', 'order.foody': 'הזמינו דרך Foody', 'order.bolt': 'הזמינו דרך Bolt Food',
-    'reviews.title': 'מה אומרים עלינו', 'reviews.sub': 'הדירוג שלנו בביקורות Google.', 'reviews.readBtn': 'קראו ביקורות', 'reviews.count': '/ 5',
+    'reviews.title': 'מה אומרים עלינו', 'reviews.sub': 'הדירוג שלנו בביקורות Google.', 'reviews.readBtn': 'קראו ביקורות', 'reviews.count': '/ 5 · 374 ביקורות',
     'footer.tagline': 'מסעדה תאילנדית, סינית וסושי',
     'footer.fine': 'שעות הפתיחה עשויות להשתנות בחגים — אנא התקשרו מראש לאישור.'
   }
