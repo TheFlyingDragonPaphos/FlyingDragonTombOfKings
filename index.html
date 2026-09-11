@@ -20,6 +20,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shojumaru&display=swap">
+<!-- Warms up the connection to Google's map servers ahead of time, so
+     when the lazy-loaded map iframe in Location & Hours actually
+     requests them, it skips the DNS/TLS setup delay — the map iframe
+     itself is Google's, not something we can make lighter, so this is
+     the main lever we have for its load time. -->
+<link rel="preconnect" href="https://www.google.com">
+<link rel="preconnect" href="https://maps.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://maps.googleapis.com">
 <style>
 
 /* ============================================================
