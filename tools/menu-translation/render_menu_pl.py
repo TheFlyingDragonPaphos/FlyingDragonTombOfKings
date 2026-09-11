@@ -133,16 +133,22 @@ def render_content_page(blocks, page_label):
     y = 70
     max_w = W - 2*MARGIN
 
+    # Line heights/gaps here are tuned so the worst-case page (25 blocks,
+    # e.g. Appetisers/Pork-Chicken-Duck) fits within the page with margin
+    # to spare -- verified against every page's content via simulation.
+    # An earlier, looser version of these constants silently dropped the
+    # last 1-2 items on most pages (the `if y > H - 80: break` below cut
+    # them off with no visible error). Do not loosen these without
+    # re-running that per-page overflow check for every language's data.
     f_h1 = F("Poppins-Black.ttf", 34)
-    f_h1_ru = RU(22)
-    f_h2 = F("Poppins-Bold.ttf", 24)
-    f_h2_ru = RU(18)
-    f_name = F("Poppins-SemiBold.ttf" if False else "Poppins-Bold.ttf", 21)
-    f_name_ru = RU(18)
-    f_desc = F("Poppins-Regular.ttf", 16)
-    f_desc_ru = RU(15)
+    f_h1_ru = RU(20)
+    f_h2 = F("Poppins-Bold.ttf", 22)
+    f_h2_ru = RU(16)
+    f_name = F("Poppins-Bold.ttf", 19)
+    f_name_ru = RU(16)
+    f_desc = F("Poppins-Regular.ttf", 15)
+    f_desc_ru = RU(14)
     f_price = F("Poppins-Bold.ttf", 21)
-    f_code = F("Poppins-Regular.ttf", 15)
 
     d.text((x, y), page_label, font=F("Poppins-Medium.ttf", 15), fill=(190, 178, 168))
     y += 34
@@ -152,24 +158,24 @@ def render_content_page(blocks, page_label):
         if kind == "header":
             _, en, ru = block
             d.text((x, y), en, font=f_h1, fill=RED)
-            y += 42
-            d.text((x, y), ru, font=f_h1_ru, fill=RED_DARK)
             y += 40
+            d.text((x, y), ru, font=f_h1_ru, fill=RED_DARK)
+            y += 34
             d.line([(x, y), (W - MARGIN, y)], fill=(224, 214, 204), width=2)
-            y += 24
+            y += 14
         elif kind == "subheader":
             _, en, ru, extra = block
             for line in wrap_text(d, en, f_h2, max_w):
                 d.text((x, y), line, font=f_h2, fill=RED)
-                y += 30
+                y += 28
             for line in wrap_text(d, ru, f_h2_ru, max_w):
                 d.text((x, y), line, font=f_h2_ru, fill=RED_DARK)
-                y += 26
+                y += 22
             if extra:
                 for line in wrap_text(d, extra, f_desc, max_w):
                     d.text((x, y), line, font=f_desc, fill=MUTED)
-                    y += 22
-            y += 14
+                    y += 20
+            y += 6
         elif kind == "item":
             _, name_en, name_ru, desc_en, desc_ru, codes, price = block
             label = name_en
@@ -181,22 +187,22 @@ def render_content_page(blocks, page_label):
             if price:
                 pw = d.textlength(price, font=f_price)
                 d.text((W - MARGIN - pw, y), price, font=f_price, fill=RED_DARK)
-            y += 26
+            y += 23
             for extra_line in lines[1:]:
                 d.text((x, y), extra_line, font=f_name, fill=INK)
-                y += 26
+                y += 23
             for line in wrap_text(d, name_ru, f_name_ru, max_w):
                 d.text((x, y), line, font=f_name_ru, fill=(70, 60, 55))
-                y += 24
+                y += 21
             if desc_en:
                 for line in wrap_text(d, desc_en, f_desc, max_w):
                     d.text((x, y), line, font=f_desc, fill=MUTED)
-                    y += 20
+                    y += 17
             if desc_ru:
                 for line in wrap_text(d, desc_ru, f_desc_ru, max_w):
                     d.text((x, y), line, font=f_desc_ru, fill=(150, 120, 115))
-                    y += 20
-            y += 14
+                    y += 17
+            y += 6
         elif kind == "note":
             pass
 
