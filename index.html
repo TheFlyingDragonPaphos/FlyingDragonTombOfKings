@@ -289,19 +289,26 @@ p.section-sub{
    from its subtitle. */
 #gallery .section-title{ margin-bottom: 32px; }
 .gallery-grid{
-  display:grid; grid-template-columns: repeat(2, 1fr); gap:20px;
+  /* CSS columns (not grid) on purpose: grid locks each ROW's height to
+     its tallest item, so a short tile sharing a row with a tall one
+     (e.g. the wide sign banner next to the taller exterior shot) leaves
+     empty space under the short one. Columns let each column stack its
+     own photos back to back at their own heights — true masonry, no
+     forced row pairing, no gaps. */
+  column-count: 2; column-gap: 20px;
 }
 .gallery-grid img{
-  /* All 4 photos are now landscape at close to the same 4:3 ratio, so a
-     shared aspect-ratio + cover keeps every tile the same size/shape
-     with only a negligible crop (rather than the very different shapes
-     from before, when one photo was portrait). Bigger 2-column tiles
-     instead of 4, per feedback that the previous grid was too small
-     to make out. */
-  width:100%; aspect-ratio: 4/3; display:block; object-fit:cover;
+  /* Each tile's aspect-ratio (set inline per image) matches that photo's
+     own dimensions, so cover here doesn't crop anything — the sign photo
+     (a wide ~2:1 banner) and the group photo (portrait) would lose real
+     content (the sign's title text / the ends of the table) if forced
+     into a uniform box. break-inside:avoid stops a column break from
+     splitting a photo across two columns. */
+  width:100%; display:block; object-fit:cover; margin-bottom:20px;
   border-radius: var(--radius); box-shadow: var(--shadow);
+  break-inside: avoid;
 }
-@media (max-width: 560px){ .gallery-grid{ grid-template-columns: 1fr; } }
+@media (max-width: 560px){ .gallery-grid{ column-count: 1; } }
 
 /* ---------- dishes ---------- */
 /* Fixed 2 columns so 4 dish cards form an even 2x2 grid instead of
@@ -515,12 +522,12 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <h2 class="section-title" data-i18n="nav.gallery">Gallery</h2>
 
     <div class="gallery-grid">
-      <img src="assets/exterior.jpg" alt="Outside The Flying Dragon Asian Kitchen">
-      <img src="assets/sign.jpg" alt="The Flying Dragon Asian Kitchen sign">
-      <img src="assets/seating.jpg" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
-      <img src="assets/dining.jpg" alt="Dining room at The Flying Dragon Asian Kitchen">
-      <img src="assets/group.jpg" alt="Guests dining at The Flying Dragon Asian Kitchen">
-      <img src="assets/dragon.jpg" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
+      <img src="assets/exterior.jpg" style="aspect-ratio:1280/960" alt="Outside The Flying Dragon Asian Kitchen">
+      <img src="assets/sign.jpg" style="aspect-ratio:1297/611" alt="The Flying Dragon Asian Kitchen sign">
+      <img src="assets/seating.jpg" style="aspect-ratio:1448/1086" alt="Covered outdoor seating at The Flying Dragon Asian Kitchen">
+      <img src="assets/dining.jpg" style="aspect-ratio:1254/1254" alt="Dining room at The Flying Dragon Asian Kitchen">
+      <img src="assets/group.jpg" style="aspect-ratio:1200/1600" alt="Guests dining at The Flying Dragon Asian Kitchen">
+      <img src="assets/dragon.jpg" style="aspect-ratio:1600/1200" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
     </div>
   </div>
 </section>
