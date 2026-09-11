@@ -873,7 +873,12 @@ function applyLanguage(lang){
   // current language; languages without their own menu.pdf yet fall back
   // to the English/Greek original rather than a broken link. Add a new
   // "assets/menu-<lang>.pdf" file and a line below as more are done.
-  var menuPdfByLang = { ru: 'assets/menu-ru.pdf' };
+  var menuPdfByLang = {
+    ru: 'assets/menu-ru.pdf',
+    de: 'assets/menu-de.pdf',
+    fr: 'assets/menu-fr.pdf',
+    pl: 'assets/menu-pl.pdf'
+  };
   var menuPdfHref = menuPdfByLang[lang] || 'assets/menu.pdf';
   document.querySelectorAll('.menu-pdf-link').forEach(function(el){
     el.setAttribute('href', menuPdfHref);
