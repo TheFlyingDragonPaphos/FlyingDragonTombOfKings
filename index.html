@@ -323,7 +323,15 @@ p.section-sub{
   background: var(--paper); border-radius: var(--radius);
   box-shadow: var(--shadow); overflow:hidden;
 }
-.dish img{ width:100%; height:220px; object-fit:cover; display:block; }
+.dish img{
+  /* Back to cover (fills the rounded card edge-to-edge, no letterbox
+     bars) but a taller box than before -- 220px was cropping away a lot
+     of width on the squarer photos. 300px keeps the ratio close enough
+     to all 4 photos' own shapes that the crop is minor, and each image's
+     object-position (set per photo below) biases it toward whichever
+     edge is safe to trim (plate margin, not garnish). */
+  width:100%; height:300px; object-fit:cover; display:block;
+}
 .dish h4{ margin:0; padding:16px; text-align:center; font-size:1.05rem; }
 .menu-pdf-cta{ text-align:center; margin-top:28px; }
 .allergen-note{
@@ -421,7 +429,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
         <a href="#location" data-i18n="nav.location">Location &amp; hours</a>
         <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
         <a href="#dishes" data-i18n="nav.dishes">Menu highlights</a>
-        <a href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
+        <a class="menu-pdf-link" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
         <a href="#order" data-i18n="nav.order">Order online</a>
       </nav>
       <!-- Language switcher: EN is default, others are AI-translated -->
@@ -449,7 +457,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <div class="cta-row">
       <a class="btn primary" href="tel:+35796000306"><span data-i18n="hero.callBtn">Call to book</span> <span class="nowrap">· 96 000306</span></a>
       <a class="btn ghost" href="#order" data-i18n="hero.orderBtn">Order online</a>
-      <a class="btn ghost" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
+      <a class="btn ghost menu-pdf-link" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="nav.menu">Full menu</a>
     </div>
   </div>
 </section>
@@ -531,7 +539,7 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
     <div class="gallery-grid">
       <div class="gallery-col">
         <img src="assets/sign.jpg" style="aspect-ratio:1297/611" alt="The Flying Dragon Asian Kitchen sign">
-        <img src="assets/exterior.jpg" style="aspect-ratio:1280/960" alt="Outside The Flying Dragon Asian Kitchen">
+        <img src="assets/exterior.jpg" style="aspect-ratio:1280/740" alt="Outside The Flying Dragon Asian Kitchen">
         <img src="assets/dining.jpg" style="aspect-ratio:1254/1254" alt="Dining room at The Flying Dragon Asian Kitchen">
         <img src="assets/dragon.jpg" style="aspect-ratio:1600/1200" alt="Carved dragon column at The Flying Dragon Asian Kitchen">
       </div>
@@ -559,25 +567,25 @@ footer .fine{ margin-top:18px; color:#8a7a72; font-size:0.75rem; }
          international menus), so no translation needed for the <h4> text. -->
     <div class="dishes">
       <div class="dish">
-        <img src="assets/dish-stirfry.jpg" alt="Spicy pork and king prawn stir-fry with French beans">
+        <img src="assets/dish-stirfry.jpg" style="object-position:50% 10%" alt="Spicy pork and king prawn stir-fry with French beans">
         <h4>Spicy Pork &amp; King Prawn Stir-Fry</h4>
       </div>
       <div class="dish">
-        <img src="assets/dish-padthai.jpg" alt="Chicken Pad Thai">
+        <img src="assets/dish-padthai.jpg" style="object-position:50% 5%" alt="Chicken Pad Thai">
         <h4>Chicken Pad Thai</h4>
       </div>
       <div class="dish">
-        <img src="assets/dish-sushi.jpg" alt="Popcorn prawn roll sushi">
+        <img src="assets/dish-sushi.jpg" style="object-position:50% 45%" alt="Popcorn prawn roll sushi">
         <h4>Popcorn Prawn Roll</h4>
       </div>
       <div class="dish">
-        <img src="assets/dish-tofu.jpg" alt="Crispy tofu in black bean sauce">
+        <img src="assets/dish-tofu.jpg" style="object-position:50% 15%" alt="Crispy tofu in black bean sauce">
         <h4>Crispy Tofu &amp; Black Bean Sauce</h4>
       </div>
     </div>
 
     <div class="menu-pdf-cta">
-      <a class="btn primary" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="dishes.viewMenuBtn">📋 View full menu (PDF)</a>
+      <a class="btn primary menu-pdf-link" href="assets/menu.pdf" target="_blank" rel="noopener" data-i18n="dishes.viewMenuBtn">📋 View full menu (PDF)</a>
     </div>
 
     <p class="allergen-note" data-i18n="allergen.note">Please let our staff know of any allergies before ordering — full ingredient information is available on request.</p>
@@ -860,6 +868,16 @@ function applyLanguage(lang){
 
   document.documentElement.setAttribute('lang', lang);
   document.body.classList.toggle('rtl-text', lang === 'he');
+
+  // Full-menu PDF links point at whichever translated menu exists for the
+  // current language; languages without their own menu.pdf yet fall back
+  // to the English/Greek original rather than a broken link. Add a new
+  // "assets/menu-<lang>.pdf" file and a line below as more are done.
+  var menuPdfByLang = { ru: 'assets/menu-ru.pdf' };
+  var menuPdfHref = menuPdfByLang[lang] || 'assets/menu.pdf';
+  document.querySelectorAll('.menu-pdf-link').forEach(function(el){
+    el.setAttribute('href', menuPdfHref);
+  });
 
   var select = document.getElementById('lang-select');
   if(select) select.value = lang;
